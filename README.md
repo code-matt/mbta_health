@@ -15,8 +15,6 @@ Go and change the project name in the following places:
 cd <root dir>
 bundle install
 rails db:create
-rails db:migrate
-rails db:seed
 ```
 ```
 cd client
