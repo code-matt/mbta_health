@@ -11,6 +11,8 @@ Go and change the project name in the following places:
 * config/initializers/session_store.rb - change the session key name
 * config/database.yml - change the database names
 
+This project is setup for Postgres using the 'pg' gem.
+
 ```
 cd <root dir>
 bundle install
