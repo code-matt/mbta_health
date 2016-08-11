@@ -1,24 +1,53 @@
-# README
+# Raingular2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Boilerplate with Angular2(RC5) frontend with a Rails5(5.0.0) Backend in api_only mode.
+Rails serves the index.html and Angular's router takes over after that.
+Tested and works with Heroku deployment.
 
-Things you may want to cover:
 
-* Ruby version
+## Installation
+Go and change the project name in the following places:
+* config/application.rb - change the module name
+* config/initializers/session_store.rb - change the session key name
+* config/database.yml - change the database names
 
-* System dependencies
+```
+cd <root dir>
+bundle install
+rails db:create
+rails db:migrate
+rails db:seed
+```
+```
+cd client
+npm install
+```
+```
+cd ..
+rails s
+```
 
-* Configuration
+Right now you have to run ```ng build``` in the client directory while
+the server is still running to see any changes you make. Still trying
+to figure out how to bring live reload back.
 
-* Database creation
+## "Rails Resolver"
+This is my best attempt so far for making routes.rb talk with angular when people
+go to URL's directly. Mashed together from a few different sources online.
+```
+client/src/app/resolver/rails.component.ts
+this.router.navigate(['index'])
+```
+Replace 'index' with whatever component you want to be loaded
+for visits to the root address.
 
-* Database initialization
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+## Heroku Deployment
 
-* Deployment instructions
-
-* ...
+```
+heroku create
+heroku buildpacks:add https://github.com/jasonswett/heroku-buildpack-nodejs
+heroku buildpacks:add heroku/ruby
+git push heroku master
+```
