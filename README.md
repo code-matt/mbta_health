@@ -1,6 +1,6 @@
 # Raingular2
 
-Boilerplate with Angular2(RC5) frontend with a Rails5(5.0.0) Backend in api_only mode.
+Boilerplate with Angular2(RC4) frontend with a Rails5(5.0.0) Backend in api_only mode.
 Rails serves the index.html and Angular's router takes over after that.
 Tested and works with Heroku deployment.
 
@@ -32,8 +32,8 @@ the server is still running to see any changes you make. Still trying
 to figure out how to bring live reload back.
 
 ## "Rails Resolver"
-This is my best attempt so far for making routes.rb talk with angular when people
-go to URL's directly. Mashed together from a few different sources online.
+This is my best attempt so far for making Rails's routes.rb talk with angular's
+router when people go to URL's directly. Mashed together from a few different sources online.
 ```
 client/src/app/resolver/rails.component.ts
 this.router.navigate(['index'])
