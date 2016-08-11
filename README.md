@@ -42,7 +42,7 @@ for visits to the root address.
 
 
 ## Heroku Deployment
-
+Make sure to configure ```config/initializers/cors.rb``` beforehand.
 ```
 heroku create
 heroku buildpacks:add https://github.com/jasonswett/heroku-buildpack-nodejs
