@@ -17,6 +17,8 @@ This project is setup for Postgres using the 'pg' gem.
 cd <root dir>
 bundle install
 rails db:create
+rails db:migrate
+rails db:seed
 ```
 ```
 cd client
