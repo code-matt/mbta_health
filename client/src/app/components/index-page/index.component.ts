@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ThingService } from '../../services/thing.service'
 import { HTTP_PROVIDERS } from '@angular/http'
 
+
 @Component({
   selector: `index-page`,
   providers: [ThingService,HTTP_PROVIDERS],
