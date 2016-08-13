@@ -1,6 +1,6 @@
 # Raingular2
 
-Boilerplate with Angular2(cli,RC4) frontend with a Rails5(5.0.0) Backend in api_only mode.
+Boilerplate with Angular2(cli,RC5) frontend with a Rails5(5.0.0) Backend in api_only mode.
 Rails serves the index.html and Angular's router takes over after that.
 Tested and works with Heroku deployment.
 
