@@ -1,5 +1,6 @@
 import { NgModule }      from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
+import { HttpModule } from '@angular/http'
 import { routing } from './app.routing';
 import { AppComponent }  from './app.component'
 import { IndexPageComponent }  from './components/index-page/index.component'
@@ -11,6 +12,7 @@ import { ThingService } from './services/thing.service'
   imports: [
     BrowserModule,
     routing,
+    HttpModule
   ],
   declarations: [
     AppComponent,
@@ -22,7 +24,7 @@ import { ThingService } from './services/thing.service'
     AppComponent,
   ],
   providers: [
-    ThingService, 
+    ThingService,
   ]
 })
 export class AppModule { }
