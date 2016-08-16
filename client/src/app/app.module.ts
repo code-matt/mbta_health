@@ -7,6 +7,7 @@ import { IndexPageComponent }  from './components/index-page/index.component'
 import { PageNotFoundComponent }  from './components/404-page/404.component'
 import { RailsRedirectComponent } from './rails-redirect/rails.component'
 import { ThingService } from './services/thing.service'
+import { AuthService } from './services/auth.service'
 
 @NgModule({
   imports: [
@@ -21,10 +22,11 @@ import { ThingService } from './services/thing.service'
     RailsRedirectComponent
   ],
   bootstrap: [
-    AppComponent,
+    AppComponent
   ],
   providers: [
-    ThingService,
+    AuthService,
+    ThingService
   ]
 })
 export class AppModule { }
