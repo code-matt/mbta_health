@@ -48,7 +48,12 @@ Rails:
 Angular:
 * https://github.com/auth0/angular2-jwt
 
-
+##Contribute!
+* Fork it
+* Create your feature branch (git checkout -b my-new-feature)
+* Commit your changes (git commit -am 'Add some feature')
+* Push to the branch (git push origin my-new-feature)
+* Create a new Pull Request
 
 ## Heroku Deployment
 Make sure to configure ```config/initializers/cors.rb``` beforehand.
