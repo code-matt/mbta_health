@@ -6,10 +6,7 @@ Tested and works with Heroku deployment.
 
 
 ## Installation
-Go and change the project name in the following places:
-* config/application.rb - change the module name
-* config/initializers/session_store.rb - change the session key name
-* config/database.yml - change the database names
+Change the project name. I suggest doing find and replace 'Raingular2'
 
 This project is setup for Postgres using the 'pg' gem.
 
@@ -42,6 +39,14 @@ this.router.navigate(['index'])
 ```
 Replace 'index' with whatever component you want to be loaded
 for visits to the root address.
+
+##JWT auth dependencies
+Rails:
+* https://github.com/nsarno/knock
+* https://github.com/codahale/bcrypt-ruby
+
+Angular:
+* https://github.com/auth0/angular2-jwt
 
 
 
