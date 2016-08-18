@@ -34,7 +34,6 @@ export class SignupFormComponent implements OnInit{
         component._router.navigate(['index'])
       },
       err => {
-        console.assert(false,"errors with signup")
         component.errors = err.errors
       })
   }

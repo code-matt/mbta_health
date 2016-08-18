@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 
 export class LoginFormComponent implements OnInit{
   public user: User
-  
+  public errors: any[] = []
+
   constructor(
     private _router: Router,
     private _authService: AuthService) {
@@ -26,8 +27,15 @@ export class LoginFormComponent implements OnInit{
   }
 
   onSubmit(userCreds: User){
+    this.errors = []
     var component = this
     this._authService.authenticate(this._authService.formatCreds(userCreds))
-    .then(response => this._router.navigate(['index']))
+    .then(
+      res => {
+        component._router.navigate(['index'])
+      },
+      err => {
+        component.errors.push("Username or Password is invalid.")
+      })
   }
 }

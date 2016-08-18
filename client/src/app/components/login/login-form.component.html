@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Login</h1>- email:foo@bar.com, pass: "secret"
+  <h1>Login</h1> <button type="button" (click)="_router.navigate(['signup'])">SignUp</button>
   <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
     <div class="form-group">
       <label for="email">login</label>
@@ -19,6 +19,11 @@
         name="password" 
         #password="ngModel" 
         [(ngModel)]="user.password">
+    </div>
+    <div *ngIf="errors.length > 0">
+      <div *ngFor="let error of errors" class="bg-danger">
+        {{error}}
+      </div>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
   </form>
