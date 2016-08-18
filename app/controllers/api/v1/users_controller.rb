@@ -1,9 +1,7 @@
 class Api::V1::UsersController < ApplicationController
 
   def create
-    user = User.new(
-      email: params[:auth][:email],
-      password: params[:auth][:password])
+    user = User.new(user_params)
     if user.valid? 
       user.save
       render json: {status: "success!"}
@@ -12,4 +10,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def user_params
+    params.require(:user).permit(:email, :password)
+  end
 end

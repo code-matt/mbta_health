@@ -28,7 +28,7 @@ export class SignupFormComponent implements OnInit{
 
   onSubmit(userCreds: User){
     var component = this
-    this._authService.signup(this._authService.formatCreds(userCreds))
+    this._authService.signup(this._authService.formatUser(userCreds))
     .then(
       res => {
         component._router.navigate(['index'])

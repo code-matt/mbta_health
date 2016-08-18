@@ -9,6 +9,7 @@ import { Observable } from 'rxjs'
   providers: [ThingService,HTTP_PROVIDERS],
   template: `
     I am a IndexPageComponent, hi ^^
+    <button type="button" (click)="_authService.logOut()">LogOut</button>
     <hr/>
     --
     Things:

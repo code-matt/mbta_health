@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http'
+import { Router } from '@angular/router'
 import {AuthHttp, AuthConfig, AUTH_PROVIDERS} from 'angular2-jwt';
 import 'rxjs/add/operator/toPromise';
 
@@ -7,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 export class AuthService {
   private loggedIn = false;
 
-  constructor(private _http: Http){
+  constructor(private _http: Http, private _router: Router){
     this.loggedIn = !!localStorage.getItem('id_token');
   }
 
@@ -71,6 +72,15 @@ export class AuthService {
     })
   }
 
+  formatUser(data){
+    return JSON.stringify({ 
+      user: {
+        email: data.email,
+        password: data.password
+      }
+    })
+  }
+
   saveJwt(jwt) {
     if(jwt) {
       localStorage.setItem('id_token', jwt)
@@ -78,9 +88,10 @@ export class AuthService {
     }
   }
 
-  logout() {
+  logOut() {
     localStorage.removeItem('id_token');
     this.loggedIn = false;
+    this._router.navigate(['login'])
   }
 
   isLoggedIn(){
