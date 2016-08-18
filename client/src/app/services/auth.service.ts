@@ -35,7 +35,8 @@ export class AuthService {
         },
         error => reject('auth failure'))
     });
-  };
+  }
+  
   formatCreds(data){
     return JSON.stringify({ 
       auth: {
