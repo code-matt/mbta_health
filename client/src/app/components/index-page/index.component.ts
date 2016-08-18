@@ -26,12 +26,11 @@ export class IndexPageComponent implements OnInit {
   constructor(
     private _thingservice: ThingService,
     private _authService: AuthService){
-    }
+  }
 
 
   ngOnInit(){
-    var obs = this._authService.authenticate(this._authService.fakeCreds())
-    .then(res => this.loadData())
+    this.loadData()
   }
 
   loadData(){
