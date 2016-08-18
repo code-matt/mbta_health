@@ -11,7 +11,7 @@ export class AuthService {
     this.loggedIn = !!localStorage.getItem('id_token');
   }
 
-  authenticate(data) {
+  authenticate(userCreds) {
     var service:AuthService = this
 
     return new Promise(function(resolve, reject) {
@@ -20,7 +20,7 @@ export class AuthService {
 
       service._http.post(
         "http://localhost:3000/api/v1/knock/auth_token",
-        data,{
+        userCreds,{
           headers: headers
         })
       .map(res => res.json())
@@ -34,6 +34,31 @@ export class AuthService {
           }
         },
         error => reject('auth failure'))
+    });
+  };
+
+  signup(userCreds){
+    var service:AuthService = this
+
+    return new Promise(function(resolve, reject) {
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      service._http.post(
+        "http://localhost:3000/api/v1/users",
+        userCreds,{
+          headers: headers
+        })
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          if(!data.errors){
+            resolve(data)
+          }else{
+            reject(data)
+          }
+        },
+        error => reject('server error'))
     });
   }
   

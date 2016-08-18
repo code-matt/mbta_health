@@ -3,13 +3,13 @@ import { AuthService } from '../../services/auth.service'
 import { Router } from '@angular/router'
 
 @Component({
-  selector: `index-page`,
+  selector: 'signup',
   template: `
-    <login-form></login-form>
+    <signup-form></signup-form>
   `
 })
 
-export class LoginPageComponent implements OnInit {
+export class SignupPageComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
@@ -17,8 +17,8 @@ export class LoginPageComponent implements OnInit {
   }
   
   ngOnInit(){
-    if(this.authService.isLoggedIn){
-      this.router.navigate(['index'])
-    }
+    // if(this.authService.isLoggedIn){
+    //   this.router.navigate(['index'])
+    // }
   }
 }
