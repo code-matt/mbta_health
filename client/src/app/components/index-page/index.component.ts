@@ -8,15 +8,20 @@ import { Observable } from 'rxjs'
   selector: `index-page`,
   providers: [ThingService,HTTP_PROVIDERS],
   template: `
-    I am a IndexPageComponent, hi ^^
-    <hr/>
-    --
-    Things:
-    <ul>
-      <li *ngFor="let thing of things">
-        {{thing.name}} -- {{thing.value}}
-      </li>
-    </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <hr/>
+          --
+          Things:
+          <ul>
+            <li *ngFor="let thing of things">
+              {{thing.name}} -- {{thing.value}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   `
 })
 

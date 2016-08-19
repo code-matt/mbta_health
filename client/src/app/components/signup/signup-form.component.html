@@ -1,35 +1,39 @@
 <div class="container">
-  <h1>Sign Up</h1>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
-    <div class="form-group">
-      <label for="email">email</label>
-      <input
-        type="text"
-        class="form-control" 
-        id="email" name="email" 
-        #email="ngModel" 
-        [(ngModel)]="user.email">
+  <div class="row">
+    <div class="col-lg-4">
+      <h1>Sign Up</h1>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+        <div class="form-group">
+          <label for="email">email</label>
+          <input
+            type="text"
+            class="form-control" 
+            id="email" name="email" 
+            #email="ngModel" 
+            [(ngModel)]="user.email">
+        </div>
+        <div *ngIf="errors.email">
+          <div *ngFor="let error of errors.email" class="bg-danger">
+            Email: {{error}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">password</label>
+          <input 
+            type="password" 
+            class="form-control" 
+            id="password" 
+            name="password" 
+            #password="ngModel" 
+            [(ngModel)]="user.password">
+        </div>
+        <div *ngIf="errors.password">
+          <div *ngFor="let error of errors.password" class="bg-danger">
+            Password: {{error}}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
     </div>
-    <div *ngIf="errors.email">
-      <div *ngFor="let error of errors.email" class="bg-danger">
-        Email: {{error}}
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="password">password</label>
-      <input 
-        type="password" 
-        class="form-control" 
-        id="password" 
-        name="password" 
-        #password="ngModel" 
-        [(ngModel)]="user.password">
-    </div>
-    <div *ngIf="errors.password">
-      <div *ngFor="let error of errors.password" class="bg-danger">
-        Password: {{error}}
-      </div>
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+  </div>
 </div>

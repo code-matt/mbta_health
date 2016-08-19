@@ -24,18 +24,18 @@ export class AuthService {
         userCreds,{
           headers: headers
         })
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          if (data.jwt){
-            resolve(data)
-            service.saveJwt(data.jwt)
-          }else{
-            reject('auth failure')
-          }
-        },
-        error => reject('auth failure'))
-    });
+        .map(res => res.json())
+        .subscribe(
+          data => {
+            if (data.jwt){
+              resolve(data)
+              service.saveJwt(data.jwt)
+            }else{
+              reject('auth failure')
+            }
+          },
+          error => reject('auth failure'))
+      });
   };
 
   signup(userCreds){
@@ -50,17 +50,17 @@ export class AuthService {
         userCreds,{
           headers: headers
         })
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          if(!data.errors){
-            resolve(data)
-          }else{
-            reject(data)
-          }
-        },
-        error => reject('server error'))
-    });
+        .map(res => res.json())
+        .subscribe(
+          data => {
+            if(!data.errors){
+              resolve(data)
+            }else{
+              reject(data)
+            }
+          },
+          error => reject('server error'))
+      });
   }
   
   formatCreds(data){
