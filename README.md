@@ -1,10 +1,10 @@
-# Raingular2
+# LateForWork
 
 Boilerplate with Angular2(cli,RC5) frontend with a Rails5(5.0.0) Backend in api_only mode.
 Rails serves the index.html and Angular's router takes over after that.
 
 ## Installation
-Change the project name. I suggest doing find and replace 'Raingular2'
+Change the project name. I suggest doing find and replace 'LateForWork'
 
 This project is setup for Postgres
 
