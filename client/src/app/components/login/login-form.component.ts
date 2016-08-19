@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-form',
-  templateUrl: 'app/components/login/login-form.component.html'
+  templateUrl: './login-form.component.html'
 })
 
 export class LoginFormComponent implements OnInit{

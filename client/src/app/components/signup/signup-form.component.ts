@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'signup-form',
-  templateUrl: `app/components/signup/signup-form.component.html`
+  templateUrl: './signup-form.component.html'
 })
 
 export class SignupFormComponent implements OnInit{
