@@ -2,13 +2,11 @@
 
 Boilerplate with Angular2(cli,RC5) frontend with a Rails5(5.0.0) Backend in api_only mode.
 Rails serves the index.html and Angular's router takes over after that.
-Tested and works with Heroku deployment.
-
 
 ## Installation
 Change the project name. I suggest doing find and replace 'Raingular2'
 
-This project is setup for Postgres using the 'pg' gem.
+This project is setup for Postgres
 
 ```
 cd <root dir>
@@ -16,13 +14,9 @@ bundle install
 rails db:create
 rails db:migrate
 rails db:seed
-```
-```
 cd client
 npm install
-```
-```
-cd ..
+ng build
 rails s
 ```
 
@@ -54,12 +48,3 @@ Angular:
 * Commit your changes (git commit -am 'Add some feature')
 * Push to the branch (git push origin my-new-feature)
 * Create a new Pull Request
-
-## Heroku Deployment
-Make sure to configure ```config/initializers/cors.rb``` beforehand.
-```
-heroku create
-heroku buildpacks:add https://github.com/jasonswett/heroku-buildpack-nodejs
-heroku buildpacks:add heroku/ruby
-git push heroku master
-```
