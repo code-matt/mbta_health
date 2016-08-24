@@ -49,12 +49,6 @@ def add_stops_to_routes
     res = Net::HTTP.get_response(uri)
     data = JSON.parse(res.body)
 
-    outbound = Direction.create(
-      mbta_direction_id: data["direction"][0]["direction_id"],
-      direction_name: data["direction"][0]["direction_name"],
-      route: route
-    )
-
     data["direction"][0]["stop"].each do |stop|
       Stop.create(
         stop_order: stop["stop_order"],
@@ -64,16 +58,11 @@ def add_stops_to_routes
         parent_station_name: stop["parent_station_name"],
         stop_lat: stop["stop_lat"],
         stop_lon: stop["stop_lon"],
-        direction: outbound
+        direction: data["direction"][1]["direction_id"],
+        route: route
       )
       puts "seeding outbound station: #{stop["stop_name"]}"
     end
-
-    inbound = Direction.create(
-      mbta_direction_id: data["direction"][1]["direction_id"],
-      direction_name: data["direction"][1]["direction_name"],
-      route: route
-    )
 
     data["direction"][1]["stop"].each do |stop|
       Stop.create(
@@ -84,7 +73,8 @@ def add_stops_to_routes
         parent_station_name: stop["parent_station_name"],
         stop_lat: stop["stop_lat"],
         stop_lon: stop["stop_lon"],
-        direction: inbound
+        direction: data["direction"][1]["direction_id"],
+        route: route
       )
       puts "seeding inbound station: #{stop["stop_name"]}"
     end
@@ -93,36 +83,41 @@ def add_stops_to_routes
 end
 
 def add_schedule_to_stops
-  Stop.all.each do |stop|
-    next if stop.direction.route.mode.mode_name == "Subway"
-    datetime = DateTime.strptime("#{Time.now.to_i}",'%s').prev_day
-    1.times do |day|
-      datetime = datetime.next_day
-      key = "KzJ_jrrznkCJXcIBA3y9lw"
-      uri = URI('http://realtime.mbta.com/developer/api/v2/schedulebystop')
-      params = { 
-        stop: stop.mbta_stop_id,
-        max_time: 1440,
-        api_key: key,
-        max_trips: 30,
-        datetime: datetime.to_time.to_i,
-      }
-      uri.query = URI.encode_www_form(params)
-      res = Net::HTTP.get_response(uri)
-      data = JSON.parse(res.body)
-      data['mode'].first["route"].first["direction"].each do |direction|
-        next if stop.direction.mbta_direction_id != direction["direction_id"]
-        direction["trip"].each do |event|
-          if Event.where('trip_name LIKE ?', event["trip_name"]).all.length == 0
-            Event.create(
-              mbta_trip_id: event["trip_id"],
-              trip_name: event["trip_name"],
-              sch_arr_dt: event["sch_arr_dt"],
-              sch_dep_dt: event["sch_dep_dt"],
-              stop: stop
-            )
-            puts "Seeding arrival/depature: #{event["trip_name"]}"
-          end
+  Route.all.each do |route|
+    key = "KzJ_jrrznkCJXcIBA3y9lw"
+    uri = URI('http://realtime.mbta.com/developer/api/v2/schedulebyroute')
+    params = { 
+      route: route.mbta_route_id,
+      max_time: 1440,
+      api_key: key,
+      max_trips: 100,
+    }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+    data = JSON.parse(res.body)
+    data["direction"].each do |direction|
+      direction_record = Direction.create(
+        mbta_direction_id: direction["direction_id"],
+        direction_name: direction["direction_name"],
+        route: route
+      )
+      direction["trip"].each do |trip|
+        trip_record = Trip.create(
+          mbta_trip_id: trip["trip_id"],
+          trip_name: trip["trip_name"],
+          direction: direction_record
+        )
+        puts "Seeding trip #{trip["trip_id"]}"
+        trip["stop"].to_a.each do |event|
+          stop = Event.create(
+            stop_sequence: event["stop_sequence"],
+            mbta_stop_id: event["stop_id"],
+            stop_name: event["stop_name"],
+            sch_arr_dt: event["sch_arr_dt"],
+            sch_dep_dt: event["sch_dep_dt"],
+            trip: trip_record
+          )
+          puts "Seeding event: #{event["stop_id"]} - departure: #{event["sch_dep_dt"]}"
         end
       end
     end
@@ -130,6 +125,3 @@ def add_schedule_to_stops
 end
 
 seed_all_the_trains!
-#mode -> route -> direction -> stop-> event
-# Event.where('trip_name LIKE ?', Event.parse_trip_name("771 (3:30 pm from South Station)"))
-# Stop.new(stop_order: stop["stop_order"],mbta_stop_id: stop["stop_id"],stop_name: stop["stop_name"],parent_station: stop["parent_station"],parent_station_name: stop["parent_station_name"],stop_lat: stop["stop_lat"],stop_lon: stop["stop_lon"],direction: outbound)

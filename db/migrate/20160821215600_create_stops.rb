@@ -8,7 +8,9 @@ class CreateStops < ActiveRecord::Migration[5.0]
       t.string :parent_station_name, null: false
       t.string :stop_lat, null: false
       t.string :stop_lon, null: false
-      t.belongs_to :direction, index: true, null: false
+      t.string :direction, null: false
+      t.belongs_to :route
+
 
       t.timestamps
     end

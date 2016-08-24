@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
-  validates :sch_arr_dt, :sch_dep_dt, :mbta_trip_id, :trip_name, presence: true
-  belongs_to :stop
+  validates :stop_sequence, :sch_arr_dt, :sch_dep_dt, :mbta_stop_id, :stop_name, presence: true
+  belongs_to :trip
 
   def self.parse_trip_name(txt)
     re1='.*?'	# Non-greedy match on filler
