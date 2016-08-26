@@ -3,24 +3,19 @@ import { ThingService } from '../../services/thing.service'
 import { AuthService } from '../../services/auth.service'
 import { HTTP_PROVIDERS } from '@angular/http'
 import { Observable } from 'rxjs'
+// import * as vis from "vis"
+// import { vis } from 'vis'
+import { NodeGraphComponent2 } from '../node-graph/node-graph.component'
+import { HeaderComponent } from '../node-graph/header-controls.component.ts'
 
 @Component({
   selector: `index-page`,
   providers: [ThingService,HTTP_PROVIDERS],
+  directives: [NodeGraphComponent2, HeaderComponent],
   template: `
     <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <hr/>
-          --
-          Things:
-          <ul>
-            <li *ngFor="let thing of things">
-              {{thing.name}} -- {{thing.value}}
-            </li>
-          </ul>
-        </div>
-      </div>
+      <node-header></node-header>
+      <node-graph></node-graph>
     </div>
   `
 })
