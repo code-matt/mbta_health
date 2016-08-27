@@ -3,8 +3,6 @@ import { ThingService } from '../../services/thing.service'
 import { AuthService } from '../../services/auth.service'
 import { HTTP_PROVIDERS } from '@angular/http'
 import { Observable } from 'rxjs'
-// import * as vis from "vis"
-// import { vis } from 'vis'
 import { NodeGraphComponent2 } from '../node-graph/node-graph.component'
 import { HeaderComponent } from '../node-graph/header-controls.component.ts'
 
@@ -30,7 +28,7 @@ export class IndexPageComponent implements OnInit {
 
 
   ngOnInit(){
-    this.loadData()
+    // this.loadData()
   }
 
   loadData(){

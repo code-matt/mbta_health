@@ -14,13 +14,20 @@ import { ThingService } from './services/thing.service'
 import { AuthService } from './services/auth.service'
 import { LoggedInGuard } from './shared/guards/logged-in.guard'
 import { routing } from './app.routing';
+import { MdMenuModule } from '@angular2-material/menu'
+import { MdButtonModule } from '@angular2-material/button'
+import { MdIconModule } from '@angular2-material/icon'
+import { HeaderComponent } from './components/node-graph/header-controls.component'
 
 @NgModule({
   imports: [
     BrowserModule,
     routing,
     HttpModule,
-    FormsModule
+    FormsModule,
+    MdMenuModule,
+    MdIconModule,
+    MdButtonModule
   ],
   declarations: [
     AppComponent,
@@ -30,7 +37,8 @@ import { routing } from './app.routing';
     LoginFormComponent,
     SignupFormComponent,
     SignupPageComponent,
-    RailsRedirectComponent
+    RailsRedirectComponent,
+    HeaderComponent
   ],
   bootstrap: [
     AppComponent

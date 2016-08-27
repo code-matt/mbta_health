@@ -10,7 +10,7 @@ export class ThingService {
     var headers = new Headers()
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('id_token'))
     
-    return this._http.get("http://localhost:3000/api/v1/things", {
+    return this._http.get("http://localhost:3000/api/v1/graphs", {
       headers: headers
     })
     .map(
