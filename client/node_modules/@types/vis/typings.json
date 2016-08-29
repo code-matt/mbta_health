@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/agileek/typings-vis/master/vs.d.ts",
+    "raw": "github:agileek/typings-vis/vs.d.ts",
+    "typings": "https://raw.githubusercontent.com/agileek/typings-vis/master/vs.d.ts"
+  }
+}
