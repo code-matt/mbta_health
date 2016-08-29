@@ -1,6 +1,6 @@
 # MBTA_Health
 
-## ( very much work in progress )
+## ( very much work in progress.. no heroku yet )
 
 ![Screenshot](screenshot.png)
 
