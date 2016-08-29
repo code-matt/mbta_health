@@ -9,7 +9,7 @@ def seed_all_the_trains!
 end
 
 def modes_and_routes
-  key = "KzJ_jrrznkCJXcIBA3y9lw"
+  key = ENV['MBTA_KEY']
   uri = URI('http://realtime.mbta.com/developer/api/v2/routes')
   params = { :api_key => key}
   uri.query = URI.encode_www_form(params)
@@ -42,7 +42,7 @@ end
 
 def add_stops_to_routes
   Route.all.each do |route|
-    key = "KzJ_jrrznkCJXcIBA3y9lw"
+    key = ENV['MBTA_KEY']
     uri = URI('http://realtime.mbta.com/developer/api/v2/stopsbyroute')
     params = { api_key: key, route: route["mbta_route_id"] }
     uri.query = URI.encode_www_form(params)
@@ -84,7 +84,7 @@ end
 
 def add_schedule_to_stops
   Route.all.each do |route|
-    key = "KzJ_jrrznkCJXcIBA3y9lw"
+    key = ENV['MBTA_KEY']
     uri = URI('http://realtime.mbta.com/developer/api/v2/schedulebyroute')
     params = { 
       route: route.mbta_route_id,
