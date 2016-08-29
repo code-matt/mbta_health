@@ -5,8 +5,8 @@
 ![Screenshot](screenshot.png)
 
 ##todo
--add in details(schedule/alerts) pane for stations/routes when one is selected.
--update station nodes color in realtime depending if trains are running on time or not.
+* add in details(schedule/alerts) pane for stations/routes when one is selected.
+* update station nodes color in realtime depending if trains are running on time or not.
 
 ## Installation
 !! You need an API key from the MBTA in order to seed this project.
