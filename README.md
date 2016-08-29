@@ -21,5 +21,6 @@ rails db:seed
 ```
 cd client
 npm install
+ng build
 rails s
 ```
