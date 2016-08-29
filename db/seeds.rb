@@ -109,7 +109,7 @@ def add_schedule_to_stops
         )
         puts "Seeding trip #{trip["trip_id"]}"
         trip["stop"].to_a.each do |event|
-          stop = Event.create(
+          Event.create(
             stop_sequence: event["stop_sequence"],
             mbta_stop_id: event["stop_id"],
             stop_name: event["stop_name"],
@@ -125,21 +125,3 @@ def add_schedule_to_stops
 end
 
 seed_all_the_trains!
-# Mode.second.routes.second.inbound.trips[7].events.each{ |t| puts "#{Time.at(t.sch_dep_dt.to_i)} - #{t.stop_name}" }
-# Mode.second.routes.second.stops.where(direction: "1").each{ |s| puts "#{s.stop_name} -- lat:#{s.stop_lat}, lon:#{s.stop_lon}"}
-
-#bearing
-# float dy = lat2 - lat1;
-# float dx = cosf(M_PI/180*lat1)*(long2 - long1);
-# float angle = atan2f(dy, dx);
-
-#distance
-# function distance(lat1, lon1, lat2, lon2) {
-#   var p = 0.017453292519943295;    // Math.PI / 180
-#   var c = Math.cos;
-#   var a = 0.5 - c((lat2 - lat1) * p)/2 + 
-#           c(lat1 * p) * c(lat2 * p) * 
-#           (1 - c((lon2 - lon1) * p))/2;
-
-#   return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-# }

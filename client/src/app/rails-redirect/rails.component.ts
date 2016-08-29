@@ -14,7 +14,7 @@ export class RailsRedirectComponent {
     var params: any = this.route.snapshot.queryParams
 
     if(params.goto == undefined){
-      this.router.navigate(['index'])
+      this.router.navigate(['mbta-network'])
     }else{
       var path = params.goto;
       this.router.navigate([path]);

@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core'
 import { ThingService } from '../../services/thing.service'
 import * as vis from 'vis'
+import { HeaderComponent } from './header-controls.component.ts'
 
 @Component({
   selector: 'node-graph',
   template: `
+  <node-header (loadStation)="zoomStation($event)" [nodes]="nodes"></node-header>
   <div class="row">
     <div class="col-lg-12">
       <div #network class="mbta-network"></div>
@@ -14,54 +16,50 @@ import * as vis from 'vis'
   styleUrls: ['node-graph.component.css'] 
 })
 export class NodeGraphComponent2 implements OnInit {
-  constructor(private _thingService: ThingService){
 
+  @ViewChild('network') network;
+
+
+  constructor(private _thingService: ThingService){
   }
-  private nodes: any
-  node1: vis.INode = {id: '1', label: 'Node 1', x:10, y: 0}
-  node2: vis.INode = {id: '2', label: 'Node 2', x:20, y: -100}
-  edge1: vis.IEdge = {from: '1', to: '2'}
-  node_dataset: vis.INode[] = [
-  ]
+
+  private nodes: any = {}
+  node_dataset: vis.INode[] = []
+  edge_dataset: vis.IEdge[] = []
   node_options: vis.INodeOptions = {
     shape: 'dot',
     size: 20,
     font: {
       color: '#FFFFFF',
-      size: 30,
+      size: 20,
       strokeColor: '#FF0000'
-    }
+    },
+    fixed: true
+  }
+
+  private scalingOptions: vis.IOptionsScaling = {
+    min: 1000,
+    max: 1000,
+    // label: {
+    //   enabled: true
+    // },
+    // customScalingFunction: function (min,max,total,value) {
+    //   return max;
+    // },
+  }
+
+  edge_options: vis.IEdgeOptions = {
+    font: {
+      size: 10,
+    },
+    scaling: this.scalingOptions
   }
   
   options: vis.IOptions = { 
     nodes: this.node_options,
-    physics: {
-      layout:{
-        improvedLayout: true,
-        hierarchical: {
-          enabled:true,
-          levelSeparation: 300,
-          nodeSpacing: 2000,
-          treeSpacing: 1000,
-          blockShifting: true,
-          edgeMinimization: true,
-          parentCentralization: true,
-          direction: 'UD',        // UD, DU, LR, RL
-          sortMethod: 'hubsize'   // hubsize, directed
-        }
-      }
-    }
-  }
-  edge_dataset: vis.IEdge[] = [
-  ]
-  stuff: vis.IData = {
-    nodes: this.node_dataset,
-    edges: this.edge_dataset
-  };
+    edges: this.edge_options}
 
-  @ViewChild('network') network
   ngOnInit(){
-    // console.log(network)
     this.loadData()
   }
   loadData(){
@@ -69,7 +67,6 @@ export class NodeGraphComponent2 implements OnInit {
       .subscribe(
         data => {
           this.nodes = data;
-          console.log(this.nodes);
           this.buildNetwork(this.nodes)
         },
         error => console.log(error))
@@ -77,19 +74,50 @@ export class NodeGraphComponent2 implements OnInit {
   buildNetwork(data){
     for (var node in data.nodes){
       node = data.nodes[node]
-      var newNode: vis.INode = {id: node["node_id"], label: node["stop_name"]}
+      var newNode: vis.INode = {
+        x: Number(node["x"]),
+        y: Number(node["y"]),
+        id: node["node_id"],
+        label: node["stop_name"]}
       this.node_dataset.push(newNode)
     }
+
     for (var edge in data.edges){
+      var id = edge;
       edge = data.edges[edge]
-      var newEdge: vis.IEdge = {from: edge["from"], to: edge["to"]}
+
+      var newEdge: vis.IEdge = {
+        from: edge["from"],
+        to: edge["to"],
+        label: edge["route"],
+        id: id,
+        color:{color: edge["color"]}}
+
       this.edge_dataset.push(newEdge)
     }
     var network_data: vis.IData = {
       nodes: this.node_dataset,
       edges: this.edge_dataset
     };
-    var network = new vis.Network(this.network.nativeElement,network_data,this.options)
-    network.redraw
+    this.network = new vis.Network(
+      this.network.nativeElement,
+      network_data,
+      this.options)
+
+    this.network.redraw
+    this.network.on("selectEdge",function(data){
+      
+    })
+  }
+  zoomStation(node){
+    var options = {
+      scale: 0.35,
+      offset: {x:0,y:0},
+      animation: {
+        duration: 1300,
+        easingFunction: "easeInOutQuad"
+      }
+    }
+    this.network.focus(node.node.node_id,options)
   }
 }

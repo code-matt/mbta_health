@@ -17,9 +17,30 @@
   border-right: 1px solid white;
 }
 
+input{
+  background-color: #6A6A6A;
+  border: 1px solid #9B9B9B;
+}
+
 @media (min-width: 768px) {
   .row-fluid {
     display: flex;
     align-items: flex-end;
   }
+}
+
+.search-results {
+  position: absolute;
+  z-index: 2;
+  width: 85%;
+  border: 1px solid #9B9B9B
+}
+
+.search-result {
+  background-color: #828282;
+}
+
+.search-result:hover {
+  cursor: pointer;
+  background-color: #5F999F
 }
