@@ -19,7 +19,6 @@ schema.rb
 
 
 # compiled output
-dist
 tmp
 
 # dependencies

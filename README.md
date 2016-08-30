@@ -1,7 +1,8 @@
 # MBTA_Health
 
-## ( very much work in progress.. no heroku yet )
+## ( very much work in progress )
 
+### http://mbta-health.herokuapp.com/
 ![Screenshot](screenshot.png)
 
 ##todo
