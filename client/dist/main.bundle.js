@@ -49233,7 +49233,7 @@ var NetworkGraphService = (function () {
 "use strict";
 
 /* harmony export */ __webpack_require__.d(exports, "a", function() { return ENV; });var ENV = {
-    baseUrl: 'https://mbta-health.herokuapp.com',
+    baseUrl: 'http://localhost:3000',
 };
 
 
@@ -63290,7 +63290,7 @@ var SearchPipe = (function () {
     SearchPipe.prototype.transform = function (nodes, query) {
         if (query == "" || query == undefined)
             return [];
-        var re = new RegExp(query);
+        var re = new RegExp(query, 'i');
         return nodes.filter(function (node) {
             return re.test(node.stop_name);
         }).slice(0, 9);
@@ -63338,7 +63338,7 @@ module.exports = ".mbta-network {\n    width: 100%;\n    height: 90vh;\n    back
 /* 564 */
 /***/ function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-12\">\n    <div class=\"node-header\">\n      <div class=\"row-fluid\">\n        <div class=\"col-md-4\">\n          <img class=\"logo\" src=\"{{env.baseUrl}}/images/logo.png\">\n        </div>\n        <div class=\"col-md-2\" on-mouseover=\"gainFocus()\" on-mouseleave=\"loseFocus()\">\n          <div class=\"input-group\">\n            <input [ngFormControl]=\"search\" type=\"text\" class=\"form-control\" placeholder=\"Enter station name\">\n          </div>\n          <search-results (loadStation)=\"load($event)\" *ngIf=\"focus\" [nodes]='nodes.nodes' [query]='query'></search-results>\n        </div>\n        <div class=\"col-md-3\">\n          <div class=\"dropdown\">\n            <div id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n              Menu\n              <span class=\"caret\"></span>\n            </div>\n            <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n              <li><a href=\"#\">Open Settings</a></li>\n              <li role=\"separator\" class=\"divider\"></li>\n              <li><a href=\"#\">GitHub</a></li>\n            </ul>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-12\">\n    <div class=\"node-header\">\n      <div class=\"row-fluid\">\n        <div class=\"col-md-4\">\n          <img class=\"logo\" src=\"{{env.baseUrl}}/images/logo.png\">\n        </div>\n        <div class=\"col-md-2\" on-mouseover=\"gainFocus()\" on-mouseleave=\"loseFocus()\">\n          <div class=\"input-group\">\n            <input [ngFormControl]=\"search\" type=\"text\" class=\"form-control\" placeholder=\"Enter station name\">\n          </div>\n          <search-results (loadStation)=\"load($event)\" *ngIf=\"focus\" [nodes]='nodes.nodes' [query]='query'></search-results>\n        </div>\n        <div class=\"col-md-3\">\n          <div class=\"dropdown\">\n            <div id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n              Menu\n              <span class=\"caret\"></span>\n            </div>\n            <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n              <li><a href=\"#\">Open Settings</a></li>\n              <li role=\"separator\" class=\"divider\"></li>\n              <li><a href=\"https://github.com/code-matt/mbta_health\" target=\"_blank\">GitHub</a></li>\n            </ul>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ },
 /* 565 */

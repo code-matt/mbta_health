@@ -9,7 +9,7 @@ export class SearchPipe implements PipeTransform {
   transform(nodes,query){
     if (query == "" || query == undefined)
       return []
-    var re = new RegExp(query)
+    var re = new RegExp(query,'i')
     return nodes.filter(
       node => {
         return re.test(node.stop_name)
