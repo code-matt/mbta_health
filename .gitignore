@@ -52,4 +52,7 @@ Thumbs.db
 #vscode
 .vscode
 .editorconfig
+
 .env
+env.json
+env.ts

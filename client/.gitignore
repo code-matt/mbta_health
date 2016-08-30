@@ -3,6 +3,8 @@
 # compiled output
 /dist
 /tmp
+env.json
+env.ts
 
 # dependencies
 /node_modules

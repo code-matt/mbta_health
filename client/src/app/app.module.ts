@@ -6,11 +6,8 @@ import { FORM_DIRECTIVES } from '@angular/common'
 import { AppComponent }  from './app.component'
 import { PageNotFoundComponent }  from './components/404-page/404.component'
 import { RailsRedirectComponent } from './rails-redirect/rails.component'
-import { ThingService } from './services/thing.service'
+import { NetworkGraphService } from './services/mbta-network.service'
 import { routing } from './app.routing';
-import { MdMenuModule } from '@angular2-material/menu'
-import { MdButtonModule } from '@angular2-material/button'
-import { MdIconModule } from '@angular2-material/icon'
 import { HeaderComponent } from './components/node-graph/header-controls.component'
 import { SearchResultsComponent } from './components/node-graph/search-results.component'
 import { SearchPipe } from './components/node-graph/search-results.pipe'
@@ -21,9 +18,6 @@ import { SearchPipe } from './components/node-graph/search-results.pipe'
     routing,
     HttpModule,
     FormsModule,
-    MdMenuModule,
-    MdIconModule,
-    MdButtonModule
   ],
   declarations: [
     AppComponent,
@@ -38,7 +32,7 @@ import { SearchPipe } from './components/node-graph/search-results.pipe'
     AppComponent
   ],
   providers: [
-    ThingService,
+    NetworkGraphService,
   ]
 })
 export class AppModule { }

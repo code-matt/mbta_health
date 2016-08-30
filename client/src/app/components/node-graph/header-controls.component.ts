@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core'
 import { Control } from '@angular/common'
 import { SearchResultsComponent } from './search-results.component'
 import 'rxjs/add/operator/debounceTime'
+import { ENV } from '../../shared/env'
 
 @Component({
   selector: 'node-header',
@@ -10,6 +11,8 @@ import 'rxjs/add/operator/debounceTime'
 })
 
 export class HeaderComponent {
+  public env = ENV
+  
   @Output() loadStation = new EventEmitter();
   @Input() nodes = {};
   search = new Control();

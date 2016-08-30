@@ -19,7 +19,6 @@ export class SearchResultsComponent implements OnChanges {
   @Output() loadStation = new EventEmitter();
 
   ngOnChanges(change: any){
-    console.log(change)
   }
 
   load(node: any){

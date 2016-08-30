@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core'
-import { ThingService } from '../../services/thing.service'
+import { NetworkGraphService } from '../../services/mbta-network.service'
 import * as vis from 'vis'
 import { HeaderComponent } from './header-controls.component.ts'
 
@@ -19,8 +19,8 @@ export class NodeGraphComponent2 implements OnInit {
 
   @ViewChild('network') network;
 
-
-  constructor(private _thingService: ThingService){
+  constructor(
+    private _thingService: NetworkGraphService){
   }
 
   private nodes: any = {}
@@ -40,12 +40,6 @@ export class NodeGraphComponent2 implements OnInit {
   private scalingOptions: vis.IOptionsScaling = {
     min: 1000,
     max: 1000,
-    // label: {
-    //   enabled: true
-    // },
-    // customScalingFunction: function (min,max,total,value) {
-    //   return max;
-    // },
   }
 
   edge_options: vis.IEdgeOptions = {
