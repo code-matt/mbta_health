@@ -49233,7 +49233,7 @@ var NetworkGraphService = (function () {
 "use strict";
 
 /* harmony export */ __webpack_require__.d(exports, "a", function() { return ENV; });var ENV = {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://mbta-health.herokuapp.com',
 };
 
 
