@@ -22,6 +22,15 @@ rails db:seed
 ```
 cd client
 npm install
+```
+Create a file in ```client``` named ```env.json```
+```
+{
+    "baseUrl": "http://localhost:3000"
+}
+```
+```
+ng env
 ng build
 rails s
 ```
