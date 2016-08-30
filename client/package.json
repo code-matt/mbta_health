@@ -37,7 +37,7 @@
     "@types/jasmine": "^2.2.30",
     "@types/jquery": "^1.10.31",
     "@types/protractor": "^1.5.16",
-    "angular-cli": "1.0.0-beta.11-webpack.2",
+    "angular-cli": "1.0.0-beta.11-webpack.8",
     "angular-cli-env": "^0.2.0",
     "codelyzer": "0.0.26",
     "jasmine-core": "2.4.1",
