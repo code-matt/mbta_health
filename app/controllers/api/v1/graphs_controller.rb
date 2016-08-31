@@ -4,4 +4,7 @@ class Api::V1::GraphsController < ApplicationController
       nodes: GRAPH_DATA.nodes,
       edges: GRAPH_DATA.edges}
   end
+
+  def show
+  end
 end

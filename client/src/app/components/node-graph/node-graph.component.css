@@ -4,3 +4,13 @@
     background-color: #222222;
     z-index: -1;
 }
+
+.route-details {
+    position: absolute;
+    background-color: #FFFFFF;
+    width: 1%;
+    height: 90vh;
+    right: 0;
+    top: 0;
+    z-index: -2;
+}

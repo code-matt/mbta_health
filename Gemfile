@@ -5,6 +5,8 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 gem 'rack-cors'
 gem 'dotenv-rails'
+gem 'unicorn'
+gem 'sucker_punch', '~> 2.0'
 
 #auth
 gem 'knock'

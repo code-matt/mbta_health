@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       mount Knock::Engine => "/knock"
       resources :users, only: [:create]
       resources :things, only: [:index]
-      resources :graphs, only: [:index]
+      resources :graphs, only: [:index,:show]
     end
   end
 

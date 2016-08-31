@@ -1,4 +1,15 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core'
+import { 
+  Component,
+  OnInit,
+  ViewChild, 
+  Output, 
+  EventEmitter,
+  animate,
+  trigger,
+  state,
+  style,
+  transition
+} from '@angular/core'
 import { NetworkGraphService } from '../../services/mbta-network.service'
 import * as vis from 'vis'
 import { HeaderComponent } from './header-controls.component.ts'
@@ -6,18 +17,42 @@ import { HeaderComponent } from './header-controls.component.ts'
 @Component({
   selector: 'node-graph',
   template: `
-  <node-header (loadStation)="zoomStation($event)" [nodes]="nodes"></node-header>
+  <node-header (loadStation)="zoomToStation($event)" [nodes]="nodes"></node-header>
   <div class="row">
     <div class="col-lg-12">
-      <div #network class="mbta-network"></div>
+      <div [@detailState]="state" #network class="mbta-network"></div>
+      <div [@detailState2]="state" class="route-details"></div>
     </div>
   </div>
   `,
-  styleUrls: ['node-graph.component.css'] 
+  styleUrls: ['node-graph.component.css'],
+  animations: [
+    trigger('detailState', [
+      state('inactive', style({
+        transform: 'scaleX(0.85) translateX(-15%)',
+      })),
+      state('active', style({
+        transform: 'scaleX(1.0) translateX(0%)'
+      })),
+      transition('inactive => active', animate('500ms ease-in')),
+      transition('active => inactive', animate('500ms ease-out'))
+    ]),
+    trigger('detailState2', [
+      state('inactive', style({
+        transform: 'scaleX(25.0) translateX(-28%)',
+      })),
+      state('active', style({
+        transform: 'scaleX(1.0) translateX(0%)'
+      })),
+      transition('inactive => active', animate('500ms ease-in')),
+      transition('active => inactive', animate('500ms ease-out'))
+    ])
+  ]
 })
 export class NodeGraphComponent2 implements OnInit {
 
   @ViewChild('network') network;
+  state: string = 'active'
 
   constructor(
     private _thingService: NetworkGraphService){
@@ -99,11 +134,18 @@ export class NodeGraphComponent2 implements OnInit {
       this.options)
 
     this.network.redraw
-    this.network.on("selectEdge",function(data){
-      
-    })
+    var component = this
+
+    this.network.on("selectNode", function (params) {
+        component.state = 'inactive'
+        console.log('selectNode Event:', params);
+    });
+    this.network.on("deselectNode", function (params) {
+        component.state = 'active'
+        console.log('deselectNode Event:', params);
+    });
   }
-  zoomStation(node){
+  zoomToStation(node){
     var options = {
       scale: 0.35,
       offset: {x:0,y:0},
