@@ -11,6 +11,7 @@ import {
   transition
 } from '@angular/core'
 import { NetworkGraphService } from '../../services/mbta-network.service'
+import { AlertsService } from '../../services/realtime.service'
 import * as vis from 'vis'
 import { HeaderComponent } from './header-controls.component.ts'
 
@@ -55,9 +56,15 @@ export class NodeGraphComponent2 implements OnInit {
   state: string = 'active'
 
   constructor(
-    private _thingService: NetworkGraphService){
+    private _thingService: NetworkGraphService,
+    private _wsService: AlertsService){
+      _wsService.messages.subscribe(data => {
+        debugger
+        this.alerts = data
+      });
   }
 
+  private alerts: any
   private nodes: any = {}
   node_dataset: vis.INode[] = []
   edge_dataset: vis.IEdge[] = []
