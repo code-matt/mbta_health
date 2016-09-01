@@ -4,6 +4,5 @@ class ApplicationController < ActionController::API
   include Knock::Authenticable
   GRAPH_DATA = GraphBuilder.new(Stop.all,Route.all)
   ALERTS = AlertsBuilder.new
-  sleep(25)
-  byebug
 end
+

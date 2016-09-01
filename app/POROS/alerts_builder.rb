@@ -5,8 +5,9 @@ class AlertsJob
   include SuckerPunch::Job
 
   def perform(stops,ab_object)
-    puts "Updating alerts in seperate thread..."
-    stops.each do |stop|
+    print "Updating alerts in seperate thread..."
+    stops.each_with_index do |stop,i|
+      break if i > 5
       key = ENV['MBTA_KEY']
       uri = URI('http://realtime.mbta.com/developer/api/v2/alertsbystop')
       params = { 
@@ -22,7 +23,8 @@ class AlertsJob
       ab_object.alerts["#{stop['mbta_stop_id']}"] = data
     end
 
-    AlertsJob.perform_in(300, stops, ab_object)
+    ActionCable.server.broadcast('alerts', ab_object.alerts.to_json)
+    AlertsJob.perform_in(30, stops, ab_object)
   end
 end
 

@@ -1,25 +1,32 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs/Rx';
-import {WebSocketService} from './websocket.service';
 
-const CHAT_URL = 'ws://localhost:8080/chat';
+const CHAT_URL = 'ws://localhost:3000/cable';
 
 export interface Message {
-    author: string;
     message: string;
 }
 
 @Injectable()
 export class AlertsService {
-    public messages: Subject<Message>;
+    private websocket: any;
+    private receivedMsg: any;
+    
+    public sendMessage(text:string){
+      this.websocket.send(text);
+    }
 
-    constructor(wsService: WebSocketService) {
-
-        this.messages = <Subject<Message>>wsService
-            .connect(CHAT_URL)
-            .map((response: MessageEvent): Message => {
-                let data = JSON.parse(response.data);
-                return data
-            });
+    public GetInstanceStatus(): Observable<any>{
+      this.websocket = new WebSocket("ws://localhost:3000/cable"); //dummy echo websocket service
+      this.websocket.onopen =  (evt) => {
+          this.websocket.send(JSON.stringify({command: "subscribe", identifier: JSON.stringify({channel: 'AlertsChannel'}),type: "confirm_subscription"}));
+      };
+      return Observable.create(observer=>{
+          this.websocket.onmessage = (evt) => { 
+              observer.next(evt);
+          };
+      })
+      .map(res => JSON.parse(res.data))
+      .share();
     }
 }

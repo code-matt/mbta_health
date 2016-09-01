@@ -58,10 +58,12 @@ export class NodeGraphComponent2 implements OnInit {
   constructor(
     private _thingService: NetworkGraphService,
     private _wsService: AlertsService){
-      _wsService.messages.subscribe(data => {
-        debugger
-        this.alerts = data
-      });
+    this._wsService.GetInstanceStatus().subscribe((result) => {
+      if(result["type"] != "ping" && result["message"] != undefined)
+      {
+        console.log(JSON.parse(result["message"]))
+      }
+    });
   }
 
   private alerts: any
