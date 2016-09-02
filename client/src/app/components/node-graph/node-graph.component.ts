@@ -57,6 +57,7 @@ export class NodeGraphComponent2 implements OnInit {
       {
         this.alerts = JSON.parse(result["message"])
         this.rebuildOptions()
+        this.network.redraw()
       }
     });
   }
@@ -108,6 +109,7 @@ export class NodeGraphComponent2 implements OnInit {
 
     return options
   }
+
   rebuildOptions(){
     var groups = {}
     for(var node in this.nodes.nodes){
