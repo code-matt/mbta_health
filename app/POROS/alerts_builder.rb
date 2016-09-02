@@ -6,23 +6,30 @@ class AlertsJob
 
   def perform(stops,ab_object)
     print "Updating alerts in seperate thread..."
-    stops.each_with_index do |stop,i|
-      break if i > 5
-      key = ENV['MBTA_KEY']
-      uri = URI('http://realtime.mbta.com/developer/api/v2/alertsbystop')
-      params = { 
-        api_key: key,
-        stop: stop["mbta_stop_id"],
-        include_access_alerts: true,
-        include_service_alerts: true}
+    arr = stops.map{ |stop| stop.mbta_stop_id }.uniq
+    alerts = []
 
-      uri.query = URI.encode_www_form(params)
-      res = Net::HTTP.get_response(uri)
-      data = JSON.parse(res.body)
+    key = ENV['MBTA_KEY']
+    uri = URI('http://realtime.mbta.com/developer/api/v2/alerts')
+    params = { api_key: key}
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+    data = JSON.parse(res.body)
 
-      ab_object.alerts["#{stop['mbta_stop_id']}"] = data
+    data["alerts"].each do |alert|
+      alert["affected_services"].each do |service|
+        service.second.each do |stop|
+          if arr.include?(stop["stop_id"])
+            alerts << {
+              id: stop["stop_id"],
+              alert: alert
+            }
+          end
+        end
+      end
     end
 
+    ab_object.alerts["alerts"] = alerts
     ActionCable.server.broadcast('alerts', ab_object.alerts.to_json)
     AlertsJob.perform_in(30, stops, ab_object)
   end

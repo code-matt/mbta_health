@@ -14,6 +14,9 @@ import { NetworkGraphService } from '../../services/mbta-network.service'
 import { AlertsService } from '../../services/realtime.service'
 import * as vis from 'vis'
 import { HeaderComponent } from './header-controls.component.ts'
+import { AlertSummaryComponent } from './info/alert-summary.component'
+import { InfoPaneComponent } from './info/info-pane.component'
+import { SearchPipe } from './search-results.pipe'
 
 @Component({
   selector: 'node-graph',
@@ -22,7 +25,7 @@ import { HeaderComponent } from './header-controls.component.ts'
   <div class="row">
     <div class="col-lg-12">
       <div [@detailState]="state" #network class="mbta-network"></div>
-      <div [@detailState2]="state" class="route-details"></div>
+      <info-pane [active]="selected" [alerts]="alerts | AlertsPipe:selected" #info></info-pane>
     </div>
   </div>
   `,
@@ -37,22 +40,13 @@ import { HeaderComponent } from './header-controls.component.ts'
       })),
       transition('inactive => active', animate('500ms ease-in')),
       transition('active => inactive', animate('500ms ease-out'))
-    ]),
-    trigger('detailState2', [
-      state('inactive', style({
-        transform: 'scaleX(25.0) translateX(-28%)',
-      })),
-      state('active', style({
-        transform: 'scaleX(1.0) translateX(0%)'
-      })),
-      transition('inactive => active', animate('500ms ease-in')),
-      transition('active => inactive', animate('500ms ease-out'))
     ])
   ]
 })
 export class NodeGraphComponent2 implements OnInit {
 
   @ViewChild('network') network;
+  @ViewChild('info') info;
   state: string = 'active'
 
   constructor(
@@ -61,13 +55,15 @@ export class NodeGraphComponent2 implements OnInit {
     this._wsService.GetInstanceStatus().subscribe((result) => {
       if(result["type"] != "ping" && result["message"] != undefined)
       {
-        console.log(JSON.parse(result["message"]))
+        this.alerts = JSON.parse(result["message"])
+        this.rebuildOptions()
       }
     });
   }
 
-  private alerts: any
+  private alerts: any = {alerts: []}
   private nodes: any = {}
+  private selected: any = undefined
   node_dataset: vis.INode[] = []
   edge_dataset: vis.IEdge[] = []
   node_options: vis.INodeOptions = {
@@ -93,10 +89,45 @@ export class NodeGraphComponent2 implements OnInit {
     scaling: this.scalingOptions
   }
   
-  options: vis.IOptions = { 
-    nodes: this.node_options,
-    edges: this.edge_options}
+  options: vis.IOptions = {}
+  
+  buildOptions(){
+    var groups = {}
+    for(var node in this.nodes.nodes){
+      groups[this.nodes.nodes[node]["mbta_id"]] = {
+        color:'rgb(0,255,140)'
+      }
+    }
+    var options = {
+      nodes: this.node_options,
+      edges: this.edge_options,
+      groups: groups,
+      physics: {
+        enabled: false
+      }}
 
+    return options
+  }
+  rebuildOptions(){
+    var groups = {}
+    for(var node in this.nodes.nodes){
+      for (var alert in this.alerts){
+        var filter = this.alerts.alerts.filter(
+          alert => alert["id"] == this.nodes.nodes[node]["mbta_id"])
+        var color = filter.length > 0? 'red':'rgb(0,255,140)'
+
+        groups[this.nodes.nodes[node]["mbta_id"]] = {
+          color: color
+        }
+      }
+    }
+    var options = {
+      nodes: this.node_options,
+      edges: this.edge_options,
+      groups: groups}
+
+    this.network.setOptions(options)    
+  }
   ngOnInit(){
     this.loadData()
   }
@@ -109,6 +140,7 @@ export class NodeGraphComponent2 implements OnInit {
         },
         error => console.log(error))
   }
+
   buildNetwork(data){
     for (var node in data.nodes){
       node = data.nodes[node]
@@ -116,7 +148,9 @@ export class NodeGraphComponent2 implements OnInit {
         x: Number(node["x"]),
         y: Number(node["y"]),
         id: node["node_id"],
-        label: node["stop_name"]}
+        mbtaId: node["mbta_id"],
+        label: node["stop_name"],
+        group: node["mbta_id"]}
       this.node_dataset.push(newNode)
     }
 
@@ -140,21 +174,32 @@ export class NodeGraphComponent2 implements OnInit {
     this.network = new vis.Network(
       this.network.nativeElement,
       network_data,
-      this.options)
+      this.buildOptions())
 
-    this.network.redraw
     var component = this
 
     this.network.on("selectNode", function (params) {
         component.state = 'inactive'
         console.log('selectNode Event:', params);
+        var arr = component.nodes.nodes
+        for (var node in arr){
+          if (arr[node]["node_id"] == params.nodes[0]){
+            component.selected = arr[node]["mbta_id"]
+            return
+          }
+        }
     });
     this.network.on("deselectNode", function (params) {
         component.state = 'active'
         console.log('deselectNode Event:', params);
+        component.selected = undefined
     });
+    this.network.on("optionsChange", function(options){
+      this.network.redraw()
+    })
   }
   zoomToStation(node){
+    debugger
     var options = {
       scale: 0.35,
       offset: {x:0,y:0},

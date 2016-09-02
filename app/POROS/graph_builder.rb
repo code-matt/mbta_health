@@ -48,7 +48,8 @@ class GraphBuilder
       x: coords[0],
       y: coords[1],
       stop_name: parse_stop_name(event["stop_name"]),
-      node_id: @nodes.length + 1
+      node_id: @nodes.length + 1,
+      mbta_id: event["mbta_stop_id"]
     }
   end
 

@@ -8,10 +8,13 @@ import { PageNotFoundComponent }  from './components/404-page/404.component'
 import { RailsRedirectComponent } from './rails-redirect/rails.component'
 import { NetworkGraphService } from './services/mbta-network.service'
 import { AlertsService } from './services/realtime.service'
+import { AlertSummaryComponent } from './components/node-graph/info/alert-summary.component'
 import { routing } from './app.routing';
 import { HeaderComponent } from './components/node-graph/header-controls.component'
 import { SearchResultsComponent } from './components/node-graph/search-results.component'
 import { SearchPipe } from './components/node-graph/search-results.pipe'
+import { AlertsPipe } from './components/node-graph/alerts.pipe'
+import { InfoPaneComponent } from './components/node-graph/info/info-pane.component'
 
 @NgModule({
   imports: [
@@ -26,7 +29,10 @@ import { SearchPipe } from './components/node-graph/search-results.pipe'
     RailsRedirectComponent,
     HeaderComponent,
     SearchResultsComponent,
+    AlertSummaryComponent,
+    InfoPaneComponent,
     SearchPipe,
+    AlertsPipe,
     FORM_DIRECTIVES
   ],
   bootstrap: [
