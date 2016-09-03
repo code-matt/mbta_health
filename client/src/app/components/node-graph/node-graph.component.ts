@@ -51,7 +51,7 @@ export class NodeGraphComponent implements OnInit {
   public state: string = 'active'
 
   constructor(
-    private _thingService: NetworkGraphService,
+    private _graphService: NetworkGraphService,
     private _wsService: AlertsService,
     private _VisHelper: VisHelper) {
 
@@ -74,7 +74,7 @@ export class NodeGraphComponent implements OnInit {
     this.loadData()
   }
   loadData() {
-    this._thingService.getThings()
+    this._graphService.getThings()
       .subscribe(
       data => {
         this.nodes = data;
