@@ -1,12 +1,12 @@
-import { NgModule }      from '@angular/core'
+import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http'
 import { FORM_DIRECTIVES } from '@angular/common'
-import { AppComponent }  from './app.component'
+import { AppComponent } from './app.component'
 import { routing } from './app.routing';
 
-import { PageNotFoundComponent }  from './components/404-page/404.component'
+import { PageNotFoundComponent } from './components/404-page/404.component'
 import { RailsRedirectComponent } from './rails-redirect/rails.component'
 
 import { NetworkGraphService } from './services/mbta-network.service'
@@ -21,7 +21,7 @@ import { SearchResultsComponent } from './components/node-graph/header-component
 import { SearchPipe } from './components/node-graph/pipes/search-results.pipe'
 import { AlertsPipe } from './components/node-graph/pipes/alerts.pipe'
 
-import {  NodeGraphComponent } from './components/node-graph/node-graph.component'
+import { NodeGraphComponent } from './components/node-graph/node-graph.component'
 
 @NgModule({
   imports: [

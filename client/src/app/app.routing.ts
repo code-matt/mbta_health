@@ -1,5 +1,5 @@
-import { Routes, RouterModule }   from '@angular/router';
-import { PageNotFoundComponent }  from './components/404-page/404.component'
+import { Routes, RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './components/404-page/404.component'
 import { RailsRedirectComponent } from './rails-redirect/rails.component'
 import { NodeGraphComponent } from './components/node-graph/node-graph.component'
 

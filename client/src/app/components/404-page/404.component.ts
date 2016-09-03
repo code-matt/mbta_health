@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import { Component } from '@angular/core'
 
 @Component({
   selector: `not-found`,
@@ -6,6 +6,6 @@ import {Component} from '@angular/core'
     <h1>404 page not found.</h1>
   `
 })
-export class PageNotFoundComponent{
+export class PageNotFoundComponent {
 
 }

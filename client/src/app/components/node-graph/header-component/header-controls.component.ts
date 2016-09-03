@@ -18,25 +18,25 @@ export class HeaderComponent {
   query: string;
   public env = ENV
 
-  constructor(){
+  constructor() {
     this.search.valueChanges
       .debounceTime(50)
       .subscribe(
-        s => this.query = s,
-        error => console.log(error))
+      s => this.query = s,
+      error => console.log(error))
   }
 
-  load(event){
+  load(event) {
     this.loadStation.emit({
       node: event.node,
     })
   }
 
   focus: boolean
-  gainFocus(){
+  gainFocus() {
     this.focus = true;
   }
-  loseFocus(){
+  loseFocus() {
     this.focus = false;
   }
 

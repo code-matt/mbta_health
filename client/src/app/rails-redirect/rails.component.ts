@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute,Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'rails-redirect',
@@ -8,14 +8,14 @@ import {ActivatedRoute,Router} from '@angular/router';
   `
 })
 export class RailsRedirectComponent {
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     var params: any = this.route.snapshot.queryParams
 
-    if(params.goto == undefined){
+    if (params.goto == undefined) {
       this.router.navigate(['mbta-network'])
-    }else{
+    } else {
       var path = params.goto;
       this.router.navigate([path]);
     }

@@ -18,10 +18,10 @@ export class SearchResultsComponent implements OnChanges {
   @Input() query;
   @Output() loadStation = new EventEmitter();
 
-  ngOnChanges(change: any){
+  ngOnChanges(change: any) {
   }
 
-  load(node: any){
+  load(node: any) {
     this.loadStation.emit({
       node: node,
     })

@@ -1,8 +1,8 @@
-import { 
+import {
   Component,
   OnInit,
-  ViewChild, 
-  Output, 
+  ViewChild,
+  Output,
   EventEmitter,
   animate,
   trigger,
@@ -51,10 +51,9 @@ export class NodeGraphComponent implements OnInit {
 
   constructor(
     private _thingService: NetworkGraphService,
-    private _wsService: AlertsService){
+    private _wsService: AlertsService) {
     this._wsService.GetInstanceStatus().subscribe((result) => {
-      if(result["type"] != "ping" && result["message"] != undefined)
-      {
+      if (result["type"] != "ping" && result["message"] != undefined) {
         this.alerts = JSON.parse(result["message"])
         this.rebuildOptions()
         this.network.redraw()
@@ -62,7 +61,7 @@ export class NodeGraphComponent implements OnInit {
     });
   }
 
-  private alerts: any = {alerts: []}
+  private alerts: any = { alerts: [] }
   private nodes: any = {}
   private selected: any = undefined
   node_dataset: vis.INode[] = []
@@ -89,14 +88,14 @@ export class NodeGraphComponent implements OnInit {
     },
     scaling: this.scalingOptions
   }
-  
+
   options: vis.IOptions = {}
-  
-  buildOptions(){
+
+  buildOptions() {
     var groups = {}
-    for(var node in this.nodes.nodes){
+    for (var node in this.nodes.nodes) {
       groups[this.nodes.nodes[node]["mbta_id"]] = {
-        color:'rgb(0,255,140)'
+        color: 'rgb(0,255,140)'
       }
     }
     var options = {
@@ -105,18 +104,19 @@ export class NodeGraphComponent implements OnInit {
       groups: groups,
       physics: {
         enabled: false
-      }}
+      }
+    }
 
     return options
   }
 
-  rebuildOptions(){
+  rebuildOptions() {
     var groups = {}
-    for(var node in this.nodes.nodes){
-      for (var alert in this.alerts){
+    for (var node in this.nodes.nodes) {
+      for (var alert in this.alerts) {
         var filter = this.alerts.alerts.filter(
           alert => alert["id"] == this.nodes.nodes[node]["mbta_id"])
-        var color = filter.length > 0? 'red':'rgb(0,255,140)'
+        var color = filter.length > 0 ? 'red' : 'rgb(0,255,140)'
 
         groups[this.nodes.nodes[node]["mbta_id"]] = {
           color: color
@@ -126,25 +126,26 @@ export class NodeGraphComponent implements OnInit {
     var options = {
       nodes: this.node_options,
       edges: this.edge_options,
-      groups: groups}
+      groups: groups
+    }
 
-    this.network.setOptions(options)    
+    this.network.setOptions(options)
   }
-  ngOnInit(){
+  ngOnInit() {
     this.loadData()
   }
-  loadData(){
+  loadData() {
     this._thingService.getThings()
       .subscribe(
-        data => {
-          this.nodes = data;
-          this.buildNetwork(this.nodes)
-        },
-        error => console.log(error))
+      data => {
+        this.nodes = data;
+        this.buildNetwork(this.nodes)
+      },
+      error => console.log(error))
   }
 
-  buildNetwork(data){
-    for (var node in data.nodes){
+  buildNetwork(data) {
+    for (var node in data.nodes) {
       node = data.nodes[node]
       var newNode: vis.INode = {
         x: Number(node["x"]),
@@ -152,11 +153,12 @@ export class NodeGraphComponent implements OnInit {
         id: node["node_id"],
         mbtaId: node["mbta_id"],
         label: node["stop_name"],
-        group: node["mbta_id"]}
+        group: node["mbta_id"]
+      }
       this.node_dataset.push(newNode)
     }
 
-    for (var edge in data.edges){
+    for (var edge in data.edges) {
       var id = edge;
       edge = data.edges[edge]
 
@@ -165,7 +167,8 @@ export class NodeGraphComponent implements OnInit {
         to: edge["to"],
         label: edge["route"],
         id: id,
-        color:{color: edge["color"]}}
+        color: { color: edge["color"] }
+      }
 
       this.edge_dataset.push(newEdge)
     }
@@ -181,35 +184,35 @@ export class NodeGraphComponent implements OnInit {
     var component = this
 
     this.network.on("selectNode", function (params) {
-        component.state = 'inactive'
-        console.log('selectNode Event:', params);
-        var arr = component.nodes.nodes
-        for (var node in arr){
-          if (arr[node]["node_id"] == params.nodes[0]){
-            component.selected = arr[node]["mbta_id"]
-            return
-          }
+      component.state = 'inactive'
+      console.log('selectNode Event:', params);
+      var arr = component.nodes.nodes
+      for (var node in arr) {
+        if (arr[node]["node_id"] == params.nodes[0]) {
+          component.selected = arr[node]["mbta_id"]
+          return
         }
+      }
     });
     this.network.on("deselectNode", function (params) {
-        component.state = 'active'
-        console.log('deselectNode Event:', params);
-        component.selected = undefined
+      component.state = 'active'
+      console.log('deselectNode Event:', params);
+      component.selected = undefined
     });
-    this.network.on("optionsChange", function(options){
+    this.network.on("optionsChange", function (options) {
       this.network.redraw()
     })
   }
-  zoomToStation(node){
+  zoomToStation(node) {
     debugger
     var options = {
       scale: 0.35,
-      offset: {x:0,y:0},
+      offset: { x: 0, y: 0 },
       animation: {
         duration: 1300,
         easingFunction: "easeInOutQuad"
       }
     }
-    this.network.focus(node.node.node_id,options)
+    this.network.focus(node.node.node_id, options)
   }
 }

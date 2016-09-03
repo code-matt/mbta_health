@@ -12,13 +12,13 @@ import { AlertSummaryComponent } from './alert-summary.component'
     </div>
   `
 })
-export class InfoPaneComponent implements OnInit, OnChanges{
+export class InfoPaneComponent implements OnInit, OnChanges {
   @Input() active
   @Input() alerts
 
-  ngOnInit(){
+  ngOnInit() {
   }
 
-  ngOnChanges(changes){
+  ngOnChanges(changes) {
   }
 }
