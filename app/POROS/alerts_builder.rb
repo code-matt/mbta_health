@@ -19,7 +19,7 @@ class AlertsJob
     data["alerts"].each do |alert|
       alert["affected_services"].each do |service|
         service.second.each do |stop|
-          if arr.include?(stop["stop_id"])
+          if arr.include?(stop['stop_id'])
             alerts << {
               id: stop["stop_id"],
               alert: alert

@@ -22,6 +22,7 @@ import { SearchPipe } from './components/node-graph/pipes/search-results.pipe'
 import { AlertsPipe } from './components/node-graph/pipes/alerts.pipe'
 
 import { NodeGraphComponent } from './components/node-graph/node-graph.component'
+import { VisHelper } from './components/node-graph/vis-helper'
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { NodeGraphComponent } from './components/node-graph/node-graph.component
   ],
   providers: [
     NetworkGraphService,
-    AlertsService
+    AlertsService,
+    VisHelper
   ]
 })
 export class AppModule { }
