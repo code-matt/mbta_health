@@ -3,4 +3,71 @@
     height: 90vh;
     background-color: #222222;
     z-index: -1;
+    display: inline-block;
+}
+
+
+
+.graphSlideLeft{
+	animation-name: graphSlideLeft;
+	-webkit-animation-name: graphSlideLeft;	
+
+	animation-duration: 0.5s;	
+	-webkit-animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards;
+
+	animation-timing-function: ease-in-out;	
+	-webkit-animation-timing-function: ease-in-out;		
+
+	visibility: visible !important;	
+}
+
+@keyframes graphSlideLeft {
+	0% {
+		transform: translateX(0%);
+    }
+	100% {
+		transform: translateX(-25%);
+	}
+}
+
+@-webkit-keyframes graphSlideLeft {
+	0% {
+		-webkit-transform: translateX(0%);
+	}
+	100% {
+		-webkit-transform: translateX(-25%);
+	}
+}
+
+.graphSlideRight{
+	animation-name: graphSlideRight;
+	-webkit-animation-name: graphSlideRight;	
+
+	animation-duration: 0.5s;	
+	-webkit-animation-duration: 0.5s;
+    -webkit-animation-fill-mode: forwards;
+
+	animation-timing-function: ease-in-out;	
+	-webkit-animation-timing-function: ease-in-out;		
+
+	visibility: visible !important;	
+}
+
+@keyframes graphSlideRight {
+	0% {
+		transform: translateX(-25%);
+    }
+	100% {
+		transform: translateX(0%);
+	}
+}
+
+@-webkit-keyframes graphSlideRight {
+	0% {
+		-webkit-transform: translateX(-25%);
+	}
+	100% {
+		-webkit-transform: translateX(-0%);
+	}
 }

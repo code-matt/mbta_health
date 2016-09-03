@@ -25,24 +25,12 @@ import { VisHelper } from './vis-helper'
   <node-header (loadStation)="zoomToStation($event)" [nodes]="nodes"></node-header>
   <div class="row">
     <div class="col-lg-12">
-      <div [@detailState]="state" #network class="mbta-network"></div>
+      <div [ngClass]="{'graphSlideLeft':selected, 'graphSlideRight': !selected}" #network class="mbta-network"></div>
       <info-pane [active]="selected" [alerts]="alerts | AlertsPipe:selected" #info></info-pane>
     </div>
   </div>
   `,
-  styleUrls: ['node-graph.component.css'],
-  animations: [
-    trigger('detailState', [
-      state('inactive', style({
-        transform: 'scaleX(0.85) translateX(-15%)',
-      })),
-      state('active', style({
-        transform: 'scaleX(1.0) translateX(0%)'
-      })),
-      transition('inactive => active', animate('500ms ease-in')),
-      transition('active => inactive', animate('500ms ease-out'))
-    ])
-  ]
+  styleUrls: ['node-graph.component.css']
 })
 export class NodeGraphComponent implements OnInit {
 

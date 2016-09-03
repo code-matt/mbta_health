@@ -5,7 +5,7 @@ import { AlertSummaryComponent } from './alert-summary.component'
   selector: 'info-pane',
   styleUrls: ['info-pane.component.css'],
   template: `
-    <div class="route-details" [ngClass]="{'slideLeft':active}" [hidden]="!active">
+    <div class="route-details" [ngClass]="{'slideLeft':active, 'slideRight':!active}">
       <div *ngFor="let alert of alerts">
         {{alert.alert.short_header_text}}
       </div>
