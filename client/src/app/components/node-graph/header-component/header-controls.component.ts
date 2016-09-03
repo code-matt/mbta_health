@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core'
 import { Control } from '@angular/common'
 import { SearchResultsComponent } from './search-results.component'
 import 'rxjs/add/operator/debounceTime'
-import { ENV } from '../../shared/env'
+import { ENV } from '../../../shared/env'
 
 @Component({
   selector: 'node-header',
@@ -11,16 +11,16 @@ import { ENV } from '../../shared/env'
 })
 
 export class HeaderComponent {
-  public env = ENV
-  
+
   @Output() loadStation = new EventEmitter();
   @Input() nodes = {};
   search = new Control();
   query: string;
+  public env = ENV
 
   constructor(){
     this.search.valueChanges
-      .debounceTime(500)
+      .debounceTime(50)
       .subscribe(
         s => this.query = s,
         error => console.log(error))

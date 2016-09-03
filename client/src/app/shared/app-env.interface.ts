@@ -5,4 +5,5 @@
 
 export interface AppEnv {
     baseUrl: string;
+    wsUrl: string;
 }

@@ -13,10 +13,10 @@ import {
 import { NetworkGraphService } from '../../services/mbta-network.service'
 import { AlertsService } from '../../services/realtime.service'
 import * as vis from 'vis'
-import { HeaderComponent } from './header-controls.component.ts'
-import { AlertSummaryComponent } from './info/alert-summary.component'
-import { InfoPaneComponent } from './info/info-pane.component'
-import { SearchPipe } from './search-results.pipe'
+import { HeaderComponent } from './header-component/header-controls.component.ts'
+import { AlertSummaryComponent } from './info-component/alert-summary.component'
+import { InfoPaneComponent } from './info-component/info-pane.component'
+import { SearchPipe } from './pipes/search-results.pipe'
 
 @Component({
   selector: 'node-graph',
@@ -43,7 +43,7 @@ import { SearchPipe } from './search-results.pipe'
     ])
   ]
 })
-export class NodeGraphComponent2 implements OnInit {
+export class NodeGraphComponent implements OnInit {
 
   @ViewChild('network') network;
   @ViewChild('info') info;

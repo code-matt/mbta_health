@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core'
-import { SearchPipe } from './search-results.pipe'
+import { SearchPipe } from '../pipes/search-results.pipe'
 
 @Component({
   selector: 'search-results',
