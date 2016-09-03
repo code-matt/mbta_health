@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs/Rx';
 
-const CHAT_URL = 'ws://localhost:3000/cable';
+// const CHAT_URL = 'ws://mbta-health.herokuapp.com/cable';
 
 export interface Message {
     message: string;
@@ -17,7 +17,7 @@ export class AlertsService {
     }
 
     public GetInstanceStatus(): Observable<any>{
-      this.websocket = new WebSocket("ws://localhost:3000/cable"); //dummy echo websocket service
+      this.websocket = new WebSocket('wss://mbta-health.herokuapp.com/cable'); //dummy echo websocket service
       this.websocket.onopen =  (evt) => {
           this.websocket.send(JSON.stringify({command: "subscribe", identifier: JSON.stringify({channel: 'AlertsChannel'}),type: "confirm_subscription"}));
       };

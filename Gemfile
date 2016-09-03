@@ -7,6 +7,7 @@ gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'unicorn'
 gem 'sucker_punch', '~> 2.0'
+gem 'redis-rails'
 
 #auth
 gem 'knock'
