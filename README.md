@@ -6,11 +6,12 @@
 ![Screenshot](screenshot.png)
 
 ##todo
-* ~~get alerts for all stations every 30secs and pipe them in via websocket~~
-* add in details(schedule/alerts) pane for stations/routes when one is selected (in progress )
-* update station nodes color in realtime depending if trains are running on time or not( right now they do for alerts )
-* ~~refactor component structure~~
-* refactor types and make interfaces
+* ~~Get alerts for all stations every 30secs and pipe them in via websocket~~
+* Add in details(schedule/alerts) pane for stations/routes when one is selected (in progress )
+* Update station nodes color in realtime depending if trains are running on time or not( right now they do for alerts )
+* ~~Refactor component structure~~
+* Refactor types and make interfaces
+* Upgrade to RC6 :(
 
 ## Installation
 !! You need an API key from the MBTA in order to seed and run this project.
