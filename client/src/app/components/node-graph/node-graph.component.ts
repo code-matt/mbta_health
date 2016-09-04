@@ -133,7 +133,6 @@ export class NodeGraphComponent implements OnInit {
     })
   }
   zoomToStation(node) {
-    debugger
     var options = {
       scale: 0.35,
       offset: { x: 0, y: 0 },

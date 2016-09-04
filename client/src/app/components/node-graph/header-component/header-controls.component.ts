@@ -24,11 +24,15 @@ export class HeaderComponent {
     this.search.valueChanges
       .debounceTime(50)
       .subscribe(
-      s => this.query = s,
+      s => {
+        this.query = s;
+        this.focus = true;
+      },
       error => console.log(error))
   }
 
   load(event) {
+    this.focus = false
     this.loadStation.emit({
       node: event.node,
     })
