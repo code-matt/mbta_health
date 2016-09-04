@@ -3,6 +3,7 @@ import { Control } from '@angular/common'
 import { SearchResultsComponent } from './search-results.component'
 import 'rxjs/add/operator/debounceTime'
 import { ENV } from '../../../shared/env'
+import { UpdateTimerComponent } from './update-timer.component'
 
 @Component({
   selector: 'node-header',
@@ -14,6 +15,7 @@ export class HeaderComponent {
 
   @Output() loadStation = new EventEmitter();
   @Input() nodes = {};
+  @Input() updateCount: number = 0
   search = new Control();
   query: string;
   public env = ENV

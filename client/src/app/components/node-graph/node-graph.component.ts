@@ -22,7 +22,7 @@ import { VisHelper } from './vis-helper'
 @Component({
   selector: 'node-graph',
   template: `
-  <node-header (loadStation)="zoomToStation($event)" [nodes]="nodes"></node-header>
+  <node-header (loadStation)="zoomToStation($event)" [nodes]="nodes" [updateCount]="updateCount"></node-header>
   <div class="row">
     <div class="col-lg-12">
       <div [ngClass]="{'graphSlideLeft':selected, 'graphSlideRight': !selected}" #network class="mbta-network"></div>
@@ -37,6 +37,7 @@ export class NodeGraphComponent implements OnInit {
   @ViewChild('network') network;
   @ViewChild('info') info;
   public state: string = 'active'
+  public updateCount: number = 0
 
   constructor(
     private _graphService: NetworkGraphService,
@@ -50,6 +51,7 @@ export class NodeGraphComponent implements OnInit {
         this.alerts = JSON.parse(result["message"])
         this._VisHelper.rebuildOptions()
         _VisHelper.network.redraw()
+        this.updateCount++
       }
     });
   }
@@ -131,6 +133,7 @@ export class NodeGraphComponent implements OnInit {
     })
   }
   zoomToStation(node) {
+    debugger
     var options = {
       scale: 0.35,
       offset: { x: 0, y: 0 },

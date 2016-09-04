@@ -17,6 +17,7 @@ import { InfoPaneComponent } from './components/node-graph/info-component/info-p
 
 import { HeaderComponent } from './components/node-graph/header-component/header-controls.component'
 import { SearchResultsComponent } from './components/node-graph/header-component/search-results.component'
+import { UpdateTimerComponent } from './components/node-graph/header-component/update-timer.component'
 
 import { SearchPipe } from './components/node-graph/pipes/search-results.pipe'
 import { AlertsPipe } from './components/node-graph/pipes/alerts.pipe'
@@ -37,6 +38,7 @@ import { VisHelper } from './components/node-graph/vis-helper'
     RailsRedirectComponent,
     HeaderComponent,
     SearchResultsComponent,
+    UpdateTimerComponent,
     AlertSummaryComponent,
     InfoPaneComponent,
     SearchPipe,

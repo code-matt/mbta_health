@@ -11,18 +11,11 @@
           </div>
           <search-results (loadStation)="load($event)" *ngIf="focus" [nodes]='nodes.nodes' [query]='query'></search-results>
         </div>
-        <div class="col-md-3">
-          <div class="dropdown">
-            <div id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              Menu
-              <span class="caret"></span>
-            </div>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li><a href="#">Open Settings</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="https://github.com/code-matt/mbta_health" target="_blank">GitHub</a></li>
-            </ul>
-          </div>
+        <div class="col-md-4">
+          <update-timer [updateCount]="updateCount"></update-timer>
+        </div>
+        <div class="col-md-2 text-right">
+          <h3><a href="https://github.com/code-matt/mbta_health" target="_blank">GitHub</a></h3>
         </div>
       </div>
     </div>
