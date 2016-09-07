@@ -25,7 +25,6 @@ export class SchedulePipe implements PipeTransform {
         arr[route][dir] = arr[route][dir].filter( s => s.stop_id == selected.mbta_id)
       }
     }
-    debugger
     return arr
   }
 }
