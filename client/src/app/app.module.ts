@@ -13,6 +13,7 @@ import { NetworkGraphService } from './services/mbta-network.service'
 import { AlertsService } from './services/realtime.service'
 
 import { AlertSummaryComponent } from './components/node-graph/info-component/alert-summary.component'
+import { ScheduleSummaryComponent } from './components/node-graph/info-component/schedule-summary.component'
 import { InfoPaneComponent } from './components/node-graph/info-component/info-pane.component'
 
 import { HeaderComponent } from './components/node-graph/header-component/header-controls.component'
@@ -21,6 +22,8 @@ import { UpdateTimerComponent } from './components/node-graph/header-component/u
 
 import { SearchPipe } from './components/node-graph/pipes/search-results.pipe'
 import { AlertsPipe } from './components/node-graph/pipes/alerts.pipe'
+import { SchedulePipe } from './components/node-graph/pipes/schedule.pipe'
+import { SelectionPipe } from './components/node-graph/pipes/selection.pipe'
 
 import { NodeGraphComponent } from './components/node-graph/node-graph.component'
 import { VisHelper } from './components/node-graph/vis-helper'
@@ -40,9 +43,12 @@ import { VisHelper } from './components/node-graph/vis-helper'
     SearchResultsComponent,
     UpdateTimerComponent,
     AlertSummaryComponent,
+    ScheduleSummaryComponent,
     InfoPaneComponent,
     SearchPipe,
     AlertsPipe,
+    SchedulePipe,
+    SelectionPipe,
     FORM_DIRECTIVES
   ],
   bootstrap: [

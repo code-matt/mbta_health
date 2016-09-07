@@ -17,6 +17,7 @@ import { HeaderComponent } from './header-component/header-controls.component.ts
 import { AlertSummaryComponent } from './info-component/alert-summary.component'
 import { InfoPaneComponent } from './info-component/info-pane.component'
 import { SearchPipe } from './pipes/search-results.pipe'
+import { SelectionPipe } from './pipes/selection.pipe'
 import { VisHelper } from './vis-helper'
 
 @Component({
@@ -26,7 +27,13 @@ import { VisHelper } from './vis-helper'
   <div class="row">
     <div class="col-lg-12">
       <div [ngClass]="{'graphSlideLeft':selected, 'graphSlideRight': !selected}" #network class="mbta-network"></div>
-      <info-pane [active]="selected" [alerts]="alerts | AlertsPipe:selected" #info></info-pane>
+      <info-pane 
+        #info
+        [active]="selected"
+        [routes]="routes"
+        [alerts]="alerts | AlertsPipe:selected" 
+        [selected]="selected | SelectionPipe:nodes"
+        [schedules]="schedules"></info-pane>
     </div>
   </div>
   `,
@@ -45,24 +52,42 @@ export class NodeGraphComponent implements OnInit {
     private _VisHelper: VisHelper) {
 
     this._VisHelper.parent = this
-  
+    var component = this
     this._wsService.GetInstanceStatus().subscribe((result) => {
-      if (result["type"] != "ping" && result["message"] != undefined) {
-        this.alerts = JSON.parse(result["message"])
-        this._VisHelper.rebuildOptions()
-        _VisHelper.network.redraw()
-        this.updateCount++
+      if(result["type"] != "ping" && result["message"] != undefined)
+      {
+        var channel = JSON.parse(result.identifier).channel
+      }
+      if (channel == "AlertsChannel") {
+        component.alerts = JSON.parse(result["message"])
+        component._VisHelper.rebuildOptions()
+        component._VisHelper.network.redraw()
+        component.updateCount++
+      }
+      // if (channel == "PredictionsChannel") {
+      //   var predictions = JSON.parse(result["message"])
+      //   this.predictions = this.parsePredictions(predictions)
+      //   this.updateCount++
+      // }
+      if (channel == "SchedulesChannel") {
+        var schedules = JSON.parse(result["message"])
+        component.schedules = schedules
+        component.updateCount++
       }
     });
   }
 
   public alerts: any = { alerts: [] }
   public nodes: any = {}
+  public schedules: any = {}
   public selected: any = undefined
+  public routes: any[] = []
+  public predictions: any
 
   ngOnInit() {
     this.loadData()
   }
+
   loadData() {
     this._graphService.getThings()
       .subscribe(
@@ -96,9 +121,9 @@ export class NodeGraphComponent implements OnInit {
         to: edge["to"],
         label: edge["route"],
         id: id,
-        color: { color: edge["color"] }
+        color: { color: edge["color"] },
+        routeId: edge["routeId"]
       }
-
       this._VisHelper.edge_dataset.push(newEdge)
     }
     var network_data: vis.IData = {
@@ -116,6 +141,7 @@ export class NodeGraphComponent implements OnInit {
 
     this.network.on("selectNode", function (params) {
       component.state = 'inactive'
+      component.getRoutesFromSelectedEdges()
       var arr = component.nodes.nodes
       for (var node in arr) {
         if (arr[node]["node_id"] == params.nodes[0]) {
@@ -125,6 +151,7 @@ export class NodeGraphComponent implements OnInit {
       }
     });
     this.network.on("deselectNode", function (params) {
+      this.routes = []
       component.state = 'active'
       component.selected = undefined
     });
@@ -133,6 +160,7 @@ export class NodeGraphComponent implements OnInit {
     })
   }
   zoomToStation(node) {
+    this.hackSelect(node.node.node_id)
     var options = {
       scale: 0.35,
       offset: { x: 0, y: 0 },
@@ -142,5 +170,23 @@ export class NodeGraphComponent implements OnInit {
       }
     }
     this.network.focus(node.node.node_id, options)
+  }
+  hackSelect(node){
+    this.network.selectNodes([node])
+    this.network._callbacks.selectNode[0]({nodes:[node]})
+  }
+  getRoutesFromSelectedEdges(){
+    var arr = []
+    var edgeData = this._VisHelper.edge_dataset
+    var selectedEdges = this.network.getSelectedEdges()
+    for(let edge in selectedEdges){
+      var dup = arr.filter( 
+        e => e.routeId == edgeData[selectedEdges[edge]].routeId).length > 0? true: false
+
+      if(!dup){
+        arr.push(this._VisHelper.edge_dataset[selectedEdges[edge]])
+      }
+    }
+    this.routes = arr
   }
 }

@@ -82,7 +82,8 @@ class GraphBuilder
           @nodes.select{ |n| n[:stop_name] == parse_stop_name(event["stop_name"]) }.first,
           @nodes.select{ |n| n[:stop_name] == parse_stop_name(trip[i+1]["stop_name"]) }.first,
           route.route_name,
-          ROUTE_COLORS.select{ |r| r[:name] == route.route_name}.first[:color])
+          ROUTE_COLORS.select{ |r| r[:name] == route.route_name}.first[:color],
+          route.mbta_route_id)
 
         if @edges.any?{ |edge| edge == new_edge }
           next
@@ -93,12 +94,13 @@ class GraphBuilder
     end
   end
 
-  def create_edge(from,to,route,color)
+  def create_edge(from,to,route,color,routeId)
     {
       from: from[:node_id],
       to: to[:node_id],
       route: route,
-      color: color
+      color: color,
+      routeId: routeId
     }
   end
 end

@@ -30,8 +30,12 @@ class AlertsJob
     end
 
     ab_object.alerts["alerts"] = alerts
-    ActionCable.server.broadcast('alerts', ab_object.alerts.to_json)
+    ActionCable.server.broadcast('alerts', remove_non_ascii(ab_object.alerts.to_json))
     AlertsJob.perform_in(30, stops, ab_object)
+  end
+
+  def remove_non_ascii(replacement) 
+    replacement.encode('UTF-8', :invalid => :replace, :undef => :replace)
   end
 end
 
@@ -42,6 +46,6 @@ class AlertsBuilder
     @stops = Stop.all
     @alerts = {}
 
-    AlertsJob.perform_async(@stops, self)
+    AlertsJob.perform_in(300,@stops, self)
   end
 end
