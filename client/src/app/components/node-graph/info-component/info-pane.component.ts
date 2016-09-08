@@ -7,28 +7,27 @@ import { SchedulePipe } from '../pipes/schedule.pipe'
   selector: 'info-pane',
   styleUrls: ['info-pane.component.css'],
   template: `
-    <div class="route-details" [ngClass]="{'slideLeft':active, 'slideRight':!active}">
+    <div class="route-details" [ngClass]="{'slideLeft':active, 'slideRight':!active}" style="overflow:auto;">
       <h3>{{selected.stop_name}}</h3>
-      <br/>
+      <hr/>
       <div *ngFor="let alert of alerts">
         <alert-summary [alert]="alert"></alert-summary>
       </div>
       <div *ngIf="alerts.length == 0">
-        No alerts for this station!
       </div>
-      <div *ngFor="let route of routes | SchedulePipe:selected:schedules">
-        <schedule-summary
-        [route]="route"></schedule-summary>
+      <div *ngFor="let stop of selected.stop_ids | SchedulePipe:schedules">
+        <schedule-summary [stop]="stop" [ticksSinceUpdate]="ticksSinceUpdate"></schedule-summary>
       </div>
+
     </div>
   `
 })
 export class InfoPaneComponent {
   @Input() active
-  @Input() routes
   @Input() selected
   @Input() schedules
   @Input() alerts
+  @Input() ticksSinceUpdate
 
   ngOnInit() {
   }

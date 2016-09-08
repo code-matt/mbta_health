@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 @Component({
   selector: 'update-timer',
   template: `
-    Time since last MBTA data: <span style="color: #4C984F; font-size: 2em">{{timeSinceUpdate}}</span><span style="color: #4C984F">s</span>
+    Time since last MBTA data: <span style="color: #6A5170; font-size: 2em">{{timeSinceUpdate}}</span><span style="color: #816F85">s</span>
   `
 })
 export class UpdateTimerComponent implements OnInit, OnChanges {

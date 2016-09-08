@@ -15,6 +15,8 @@ import { AlertsService } from './services/realtime.service'
 import { AlertSummaryComponent } from './components/node-graph/info-component/alert-summary.component'
 import { ScheduleSummaryComponent } from './components/node-graph/info-component/schedule-summary.component'
 import { InfoPaneComponent } from './components/node-graph/info-component/info-pane.component'
+import { EpochPipe } from './components/node-graph/info-component/pipes/epochtime.pipe'
+import { CountdownPipe } from './components/node-graph/info-component/pipes/countdown.pipe'
 
 import { HeaderComponent } from './components/node-graph/header-component/header-controls.component'
 import { SearchResultsComponent } from './components/node-graph/header-component/search-results.component'
@@ -45,6 +47,8 @@ import { VisHelper } from './components/node-graph/vis-helper'
     AlertSummaryComponent,
     ScheduleSummaryComponent,
     InfoPaneComponent,
+    EpochPipe,
+    CountdownPipe,
     SearchPipe,
     AlertsPipe,
     SchedulePipe,

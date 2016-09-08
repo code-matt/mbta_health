@@ -19,6 +19,7 @@ import { InfoPaneComponent } from './info-component/info-pane.component'
 import { SearchPipe } from './pipes/search-results.pipe'
 import { SelectionPipe } from './pipes/selection.pipe'
 import { VisHelper } from './vis-helper'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'node-graph',
@@ -30,10 +31,10 @@ import { VisHelper } from './vis-helper'
       <info-pane 
         #info
         [active]="selected"
-        [routes]="routes"
         [alerts]="alerts | AlertsPipe:selected" 
         [selected]="selected | SelectionPipe:nodes"
-        [schedules]="schedules"></info-pane>
+        [schedules]="schedules"
+        [ticksSinceUpdate]="ticksSinceUpdate"></info-pane>
     </div>
   </div>
   `,
@@ -64,28 +65,34 @@ export class NodeGraphComponent implements OnInit {
         component._VisHelper.network.redraw()
         component.updateCount++
       }
-      // if (channel == "PredictionsChannel") {
-      //   var predictions = JSON.parse(result["message"])
-      //   this.predictions = this.parsePredictions(predictions)
-      //   this.updateCount++
-      // }
       if (channel == "SchedulesChannel") {
         var schedules = JSON.parse(result["message"])
         component.schedules = schedules
         component.updateCount++
+        component.resetTick()
       }
     });
   }
 
+  startTick(){
+    let timer = Observable.timer(0,1000);
+    timer.subscribe(t => this.ticksSinceUpdate++);
+  }
+
+  resetTick(){
+    this.ticksSinceUpdate = 0
+  }
+
+  public ticksSinceUpdate: number = 0
   public alerts: any = { alerts: [] }
   public nodes: any = {}
   public schedules: any = {}
   public selected: any = undefined
-  public routes: any[] = []
   public predictions: any
 
   ngOnInit() {
     this.loadData()
+    this.startTick()
   }
 
   loadData() {
@@ -105,9 +112,9 @@ export class NodeGraphComponent implements OnInit {
         x: Number(node["x"]),
         y: Number(node["y"]),
         id: node["node_id"],
-        mbtaId: node["mbta_id"],
+        mbtaId: node["stop_name"],
         label: node["stop_name"],
-        group: node["mbta_id"]
+        group: node["stop_name"]
       }
       this._VisHelper.node_dataset.push(newNode)
     }
@@ -141,11 +148,10 @@ export class NodeGraphComponent implements OnInit {
 
     this.network.on("selectNode", function (params) {
       component.state = 'inactive'
-      component.getRoutesFromSelectedEdges()
       var arr = component.nodes.nodes
       for (var node in arr) {
         if (arr[node]["node_id"] == params.nodes[0]) {
-          component.selected = arr[node]["mbta_id"]
+          component.selected = arr[node]
           return
         }
       }
@@ -174,19 +180,5 @@ export class NodeGraphComponent implements OnInit {
   hackSelect(node){
     this.network.selectNodes([node])
     this.network._callbacks.selectNode[0]({nodes:[node]})
-  }
-  getRoutesFromSelectedEdges(){
-    var arr = []
-    var edgeData = this._VisHelper.edge_dataset
-    var selectedEdges = this.network.getSelectedEdges()
-    for(let edge in selectedEdges){
-      var dup = arr.filter( 
-        e => e.routeId == edgeData[selectedEdges[edge]].routeId).length > 0? true: false
-
-      if(!dup){
-        arr.push(this._VisHelper.edge_dataset[selectedEdges[edge]])
-      }
-    }
-    this.routes = arr
   }
 }

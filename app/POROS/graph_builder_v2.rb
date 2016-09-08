@@ -10,20 +10,8 @@ class GraphBuilder
       build_nodes(route)
     end
     build_edges
-    # write_csv
+    write_db_records
   end
-  # def write_csv
-  #   CSV.open("edges.csv", "w") do |csv|
-  #     @edges.each do |edge|
-  #       csv << [edge[:to],edge[:from],edge[:route],edge[:color],edge[:routeId]]
-  #     end
-  #   end
-  #   CSV.open("nodes.csv", "w") do |csv|
-  #     @nodes.each do |node|
-  #       csv << [node[:x],node[:y],node[:stop_name],node[:node_id],node[:stop_ids].to_json.to_s]
-  #     end
-  #   end
-  # end
 
   def build_nodes(route)
     outbound = route.stops[0..(route.stops.length/2) - 1]

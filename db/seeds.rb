@@ -5,7 +5,7 @@ require 'date'
 def seed_all_the_trains!
   modes_and_routes
   add_stops_to_routes
-  add_schedule_to_stops
+  # add_schedule_to_stops
 end
 
 def modes_and_routes
@@ -79,48 +79,6 @@ def add_stops_to_routes
       puts "seeding inbound station: #{stop["stop_name"]}"
     end
 
-  end
-end
-
-def add_schedule_to_stops
-  Route.all.each do |route|
-    key = ENV['MBTA_KEY']
-    uri = URI('http://realtime.mbta.com/developer/api/v2/schedulebyroute')
-    params = { 
-      route: route.mbta_route_id,
-      max_time: 1440,
-      api_key: key,
-      max_trips: 100,
-    }
-    uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
-    data = JSON.parse(res.body)
-    data["direction"].each do |direction|
-      direction_record = Direction.create(
-        mbta_direction_id: direction["direction_id"],
-        direction_name: direction["direction_name"],
-        route: route
-      )
-      direction["trip"].each do |trip|
-        trip_record = Trip.create(
-          mbta_trip_id: trip["trip_id"],
-          trip_name: trip["trip_name"],
-          direction: direction_record
-        )
-        puts "Seeding trip #{trip["trip_id"]}"
-        trip["stop"].to_a.each do |event|
-          Event.create(
-            stop_sequence: event["stop_sequence"],
-            mbta_stop_id: event["stop_id"],
-            stop_name: event["stop_name"],
-            sch_arr_dt: event["sch_arr_dt"],
-            sch_dep_dt: event["sch_dep_dt"],
-            trip: trip_record
-          )
-          puts "Seeding event: #{event["stop_id"]} - departure: #{event["sch_dep_dt"]}"
-        end
-      end
-    end
   end
 end
 

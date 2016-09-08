@@ -28,7 +28,7 @@ export class AlertsService {
         observer.next(evt);
       };
     })
-      .map(res => JSON.parse(res.data))
-      .share();
+    .map(res => JSON.parse(res.data))
+    .share();
   }
 }
