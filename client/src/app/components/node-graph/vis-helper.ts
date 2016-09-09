@@ -47,7 +47,8 @@ export class VisHelper {
     for (var node in this.parent.nodes.nodes) {
       for (var alert in this.parent.alerts) {
         var filter = this.parent.alerts.alerts.filter(
-          alert => alert["id"] == this.parent.nodes.nodes[node]["stop_name"])
+          alert => alert["id"] == this.parent.nodes.nodes[node]["mbta_id"] || 
+                    alert["id"] == this.parent.nodes.nodes[node]["stop_name"])
         var color = filter.length > 0 ? 'red' : 'rgb(0,255,140)'
 
         groups[this.parent.nodes.nodes[node]["stop_name"]] = {

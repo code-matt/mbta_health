@@ -17,13 +17,13 @@ import { ScheduleSummaryComponent } from './components/node-graph/info-component
 import { InfoPaneComponent } from './components/node-graph/info-component/info-pane.component'
 import { EpochPipe } from './components/node-graph/info-component/pipes/epochtime.pipe'
 import { CountdownPipe } from './components/node-graph/info-component/pipes/countdown.pipe'
+import { AlertsPipe } from './components/node-graph/info-component/pipes/alerts.pipe'
 
 import { HeaderComponent } from './components/node-graph/header-component/header-controls.component'
 import { SearchResultsComponent } from './components/node-graph/header-component/search-results.component'
 import { UpdateTimerComponent } from './components/node-graph/header-component/update-timer.component'
 
 import { SearchPipe } from './components/node-graph/pipes/search-results.pipe'
-import { AlertsPipe } from './components/node-graph/pipes/alerts.pipe'
 import { SchedulePipe } from './components/node-graph/pipes/schedule.pipe'
 import { SelectionPipe } from './components/node-graph/pipes/selection.pipe'
 

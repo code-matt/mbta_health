@@ -25,7 +25,8 @@ class GraphSeeder
         y: node[:y],
         stop_name: node[:stop_name],
         node_id: node[:node_id],
-        stop_ids: node[:stop_ids].to_json
+        stop_ids: node[:stop_ids].to_json,
+        mbta_id: node[:mbta_id]
       )
       puts "created node #{i}"
     end
@@ -54,14 +55,14 @@ class GraphSeeder
         if @nodes.any?{ |node| node[:stop_name] == stop["parent_station_name"] }
           add_stop(stop,stop["parent_station_name"],route.mbta_route_id)
         else
-          create_node(coords[0],coords[1],stop["parent_station_name"])
+          create_node(coords[0],coords[1],stop["parent_station_name"],stop["mbta_stop_id"])
           add_stop(stop,stop["parent_station_name"],route.mbta_route_id)
         end
       else
         if @nodes.any?{ |node| node[:stop_name] == stop["stop_name"] }
           next #add stop id?
         else
-          create_node(coords[0],coords[1],stop["stop_name"])
+          create_node(coords[0],coords[1],stop["stop_name"],stop["mbta_stop_id"])
           add_stop(stop,stop["stop_name"],route.mbta_route_id)
         end
       end
@@ -75,27 +76,28 @@ class GraphSeeder
         if @nodes.any?{ |node| node[:stop_name] == stop["parent_station_name"] }
           add_stop(stop,stop["parent_station_name"],route.mbta_route_id)
         else
-          create_node(coords[0],coords[1],stop["parent_station_name"])
+          create_node(coords[0],coords[1],stop["parent_station_name"],stop["mbta_stop_id"])
           add_stop(stop,stop["parent_station_name"],route.mbta_route_id)
         end
       else
         if @nodes.any?{ |node| node[:stop_name] == stop["stop_name"] }
           next #add stop_id?
         else
-          create_node(coords[0],coords[1],stop["stop_name"])
+          create_node(coords[0],coords[1],stop["stop_name"],stop["mbta_stop_id"])
           add_stop(stop,stop["stop_name"],route.mbta_route_id)
         end
       end
     end
   end
 
-  def create_node(x,y,stop_name)
+  def create_node(x,y,stop_name,mbta_id)
     new = {
       x: x,
       y: y,
       stop_name: stop_name,
       node_id: @nodes.length + 1,
-      stop_ids: []
+      stop_ids: [],
+      mbta_id: mbta_id
     }
     @nodes << new
   end

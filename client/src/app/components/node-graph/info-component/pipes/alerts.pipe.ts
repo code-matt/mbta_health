@@ -6,8 +6,7 @@ import { Pipe, PipeTransform, Injectable } from '@angular/core'
 
 @Injectable()
 export class AlertsPipe implements PipeTransform {
-  transform(alerts, selectedNode) {
-    // debugger
+  transform(alerts, selectedNode, schedules) {
     // return alerts.alerts.filter(alert => alert["id"] == selectedNode ? true : false)
     return []
   }

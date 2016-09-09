@@ -17,7 +17,8 @@ class GraphBuilder
         y: node.y,
         stop_name: node.stop_name,
         node_id: node.node_id,
-        stop_ids: JSON.parse(node.stop_ids)
+        stop_ids: JSON.parse(node.stop_ids),
+        mbta_id: node.mbta_id
       }
     end
 

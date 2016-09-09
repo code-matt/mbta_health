@@ -9,6 +9,22 @@
 	padding: 15px;
 }
 
+.glyphicon-alert{
+	color: orangered;
+	font-size: 1.5em;
+}
+
+.alerts h2{
+	padding: 10px;
+}
+
+.alert{
+	padding: 5px;
+	margin: 15px;
+	border: 2px solid red;
+	box-shadow: 5px 5px 5px #888888;
+}
+
 .schedule-summary{
 	background-color: #E2E2E2;
 	margin-bottom: 10px;

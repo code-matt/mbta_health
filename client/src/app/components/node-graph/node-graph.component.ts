@@ -31,7 +31,7 @@ import { Observable } from 'rxjs'
       <info-pane 
         #info
         [active]="selected"
-        [alerts]="alerts | AlertsPipe:selected" 
+        [alerts]="alerts" 
         [selected]="selected | SelectionPipe:nodes"
         [schedules]="schedules"
         [ticksSinceUpdate]="ticksSinceUpdate"></info-pane>
