@@ -24,7 +24,9 @@ class SchedulesChannel < ApplicationCable::Channel
                   stop_id: stop["stop_id"],
                   stop_name: stop["stop_name"],
                   pre_dt: stop["pre_dt"],
-                  pre_away: stop["pre_away"]
+                  pre_away: stop["pre_away"],
+                  trip_headsign: trip["trip_headsign"],
+                  trip_name: trip["trip_name"]
                 }
             end
           end

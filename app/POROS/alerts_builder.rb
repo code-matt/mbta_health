@@ -23,26 +23,39 @@ class AlertsJob
       AlertsJob.perform_in(30, stops, ab_object)
       return
     end
-    if (res.is_a?(Net::HTTPSuccess))
-      data = JSON.parse(res.body.force_encoding('UTF-8'))
+    if (res.is_a?(Net::HTTPSuccess) && res.body)
+      if(valid_json?(res.body))
+        data = JSON.parse(res.body.force_encoding('UTF-8'))
 
-      data["alerts"].each do |alert|
-        alert["affected_services"].each do |service|
-          service.second.each do |stop|
-            if arr.include?(stop['stop_id'])
-              alerts << {
-                id: stop["stop_id"],
-                alert: alert
-              }
+        data["alerts"].each do |alert|
+          alert["affected_services"].each do |service|
+            service.second.each do |stop|
+              if arr.include?(stop['stop_id'])
+                alerts << {
+                  id: stop["stop_id"],
+                  alert: alert
+                }
+              end
             end
           end
         end
-      end
       ab_object.alerts["alerts"] = alerts
       ActionCable.server.broadcast('alerts', remove_non_ascii(ab_object.alerts.to_json))
       AlertsJob.perform_in(30, stops, ab_object)
+      else
+        AlertsJob.perform_in(30, stops, ab_object)
+      end
     else
       AlertsJob.perform_in(30, stops, ab_object)
+    end
+  end
+
+  def valid_json?(json)
+    begin
+      JSON.parse(json)
+      return true
+    rescue JSON::ParserError => e
+      return false
     end
   end
 

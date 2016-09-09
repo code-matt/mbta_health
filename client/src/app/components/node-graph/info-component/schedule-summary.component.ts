@@ -9,7 +9,8 @@ import { CountdownPipe } from './pipes/countdown.pipe'
       <div class="col-md-10 col-md-offset-1 schedule-summary">
         <span class="title">{{stop.route}} - {{stop.direction}}</span>
         <br/>
-        <p>Away: {{schedule.pre_away | CountdownPipe:ticksSinceUpdate}}</p>
+        <p>Destination: {{schedule.trip_headsign}}</p>
+        <p>Predicted Arrival: {{schedule.pre_away | CountdownPipe:ticksSinceUpdate}}</p>
         <p>Departure Time: {{schedule.pre_dt | EpochPipe}}</p>
       </div>
     </div>

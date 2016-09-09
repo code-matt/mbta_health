@@ -24,12 +24,16 @@ class CRScheduleJob
       CRScheduleJob.perform_in(30, schedule_object)
       return
     end
-    if (res.is_a?(Net::HTTPSuccess))
-      data = JSON.parse(res.body.force_encoding('UTF-8'))
+    if (res.is_a?(Net::HTTPSuccess) && res.body)
+      if(valid_json?(res.body))
+        data = JSON.parse(res.body.force_encoding('UTF-8'))
 
-      schedule_object.schedule = data
-      ActionCable.server.broadcast('schedules', remove_non_ascii(build_sch(schedule_object.schedule)))
-      CRScheduleJob.perform_in(30, schedule_object)
+        schedule_object.schedule = data
+        ActionCable.server.broadcast('schedules', remove_non_ascii(build_sch(schedule_object.schedule)))
+        CRScheduleJob.perform_in(30, schedule_object)
+      else
+        CRScheduleJob.perform_in(30, schedule_object)
+      end
     else
       CRScheduleJob.perform_in(30, schedule_object)
     end
@@ -37,6 +41,15 @@ class CRScheduleJob
 
   def remove_non_ascii(replacement) 
     replacement.encode('UTF-8', :invalid => :replace, :undef => :replace)
+  end
+
+  def valid_json?(json)
+    begin
+      JSON.parse(json)
+      return true
+    rescue JSON::ParserError => e
+      return false
+    end
   end
 
   def build_sch(schedules)
@@ -54,7 +67,9 @@ class CRScheduleJob
                   stop_id: stop["stop_id"],
                   stop_name: stop["stop_name"],
                   pre_dt: stop["pre_dt"],
-                  pre_away: stop["pre_away"]
+                  pre_away: stop["pre_away"],
+                  trip_headsign: trip["trip_headsign"],
+                  trip_name: trip["trip_name"]
                 }
             end
           end
