@@ -34,7 +34,8 @@ import { Observable } from 'rxjs'
         [alerts]="alerts" 
         [selected]="selected | SelectionPipe:nodes"
         [schedules]="schedules"
-        [ticksSinceUpdate]="ticksSinceUpdate"></info-pane>
+        [ticksSinceUpdate]="ticksSinceUpdate"
+        (closeDetails)="closeDetails()"></info-pane>
     </div>
   </div>
   `,
@@ -179,5 +180,8 @@ export class NodeGraphComponent implements OnInit {
   hackSelect(node){
     this.network.selectNodes([node])
     this.network._callbacks.selectNode[0]({nodes:[node]})
+  }
+  closeDetails(){
+    this.state = 'active'
   }
 }

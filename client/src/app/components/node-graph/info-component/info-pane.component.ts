@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core'
+import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core'
 import { AlertSummaryComponent } from './alert-summary.component'
 import { ScheduleSummaryComponent } from './schedule-summary.component'
 import { SchedulePipe } from '../pipes/schedule.pipe'
@@ -7,14 +7,21 @@ import { SchedulePipe } from '../pipes/schedule.pipe'
   selector: 'info-pane',
   styleUrls: ['info-pane.component.css'],
   template: `
-    <div class="route-details" [ngClass]="{'slideLeft':active, 'slideRight':!active}" style="overflow:auto;" (click)="toggleAlerts()">
-      <h3>{{selected.stop_name}}</h3>
-      <span *ngIf="stationAlerts.length > 0">
-        <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>This station has alerts!
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">View</button>
-      </span>
-      <hr/>
-      <div *ngFor="let stop of selected.stop_ids | SchedulePipe:schedules">
+    <div class="route-details" [ngClass]="{'slideLeft':active, 'slideRight':!active}" style="overflow:auto;" (click)="toggleAlerts()" (window:resize)="onResize($event)" [style.width.%]="width">
+      <div class="col-xs-10">
+        <h3>{{selected.stop_name}}</h3>
+      </div>
+      <div class="col-xs-2">
+        <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" (click)="toggleDetails($event)"></span>
+      </div>
+      <div class="col-xs-12">
+        <span *ngIf="stationAlerts.length > 0">
+          <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>This station has alerts!
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">View</button>
+        </span>
+        <hr/>
+      </div>
+      <div *ngFor="let stop of selected.stop_ids | SchedulePipe:schedules" class="col-xs-6 col-sm-12">
         <schedule-summary [stop]="stop" [ticksSinceUpdate]="ticksSinceUpdate"></schedule-summary>
       </div>
     </div>
@@ -40,14 +47,43 @@ export class InfoPaneComponent {
   @Input() schedules
   @Input() alerts
   @Input() ticksSinceUpdate
+  @Output() closeDetails = new EventEmitter()
   public stationAlerts: any[] = []
   public alertsActive: boolean = false
+  private width:number = 25
 
   ngOnInit() {
+    var width = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+
+    if(width < 768)
+    {
+      this.width = 90
+    }
+
+  }
+
+  onResize(){
+    var width = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+
+    if(width < 768)
+    {
+      this.width = 90
+    }else{
+      this.width = 25
+    }
+
   }
 
   toggleAlerts(){
     this.alertsActive = !this.alertsActive
+  }
+
+  toggleDetails(event){
+    this.closeDetails.emit({close: true})
   }
 
   ngOnChanges(changes) {
