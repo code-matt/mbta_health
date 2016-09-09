@@ -8,7 +8,7 @@ export class NetworkGraphService {
   public env = ENV
   constructor(private _http: Http) { }
 
-  getThings() {
+  getGraphData() {
     var headers = new Headers()
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('id_token'))
 

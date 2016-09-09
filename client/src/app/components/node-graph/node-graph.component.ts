@@ -88,7 +88,6 @@ export class NodeGraphComponent implements OnInit {
   public nodes: any = {}
   public schedules: any = {}
   public selected: any = undefined
-  public predictions: any
 
   ngOnInit() {
     this.loadData()
@@ -96,7 +95,7 @@ export class NodeGraphComponent implements OnInit {
   }
 
   loadData() {
-    this._graphService.getThings()
+    this._graphService.getGraphData()
       .subscribe(
       data => {
         this.nodes = data;
