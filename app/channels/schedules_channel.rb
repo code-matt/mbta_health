@@ -2,11 +2,12 @@ class SchedulesChannel < ApplicationCable::Channel
   def subscribed
     stream_from 'schedules'
     schedule_object = ApplicationController::SCHEDULE
-    ActionCable.server.broadcast('schedules', remove_non_ascii(build_sch(schedule_object.schedule)))
+    ActionCable.server.broadcast('schedules', encode(build_sch(schedule_object.schedule)))
   end
 
-  def remove_non_ascii(replacement) 
-    replacement.encode('UTF-8', :invalid => :replace, :undef => :replace)
+  def encode(str) 
+    str = str.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+    str = str.force_encoding(Encoding::UTF_8)
   end
 
   def build_sch(schedules)

@@ -2,10 +2,11 @@ class AlertsChannel < ApplicationCable::Channel
   def subscribed
     stream_from 'alerts'
     ab_object = ApplicationController::ALERTS
-    ActionCable.server.broadcast('alerts', remove_non_ascii(ab_object.alerts.to_json))
+    ActionCable.server.broadcast('alerts', encode(ab_object.alerts.to_json))
   end
 
-  def remove_non_ascii(replacement) 
-    replacement.encode('UTF-8', :invalid => :replace, :undef => :replace)
+  def encode(str) 
+    str = str.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+    str = str.force_encoding(Encoding::UTF_8)
   end
 end

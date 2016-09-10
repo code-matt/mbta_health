@@ -11,6 +11,7 @@ class CRScheduleJob
     uri = URI('http://realtime.mbta.com/developer/api/v2/predictionsbyroutes')
     routes = 'CR-Fairmount,CR-Fitchburg,CR-Worcester,CR-Franklin,CR-Greenbush,CR-Haverhill,CR-Kingston,CR-Lowell,CR-Middleborough,CR-Needham,CR-Newburyport,CR-Providence,Blue,Orange,Red,Green-B,Green-C,Green-D,Green-E,Mattapan'
     params = {
+      format: 'json',
       api_key: key,
       routes: routes}
     uri.query = URI.encode_www_form(params)
@@ -29,7 +30,7 @@ class CRScheduleJob
         data = JSON.parse(res.body.force_encoding('UTF-8'))
 
         schedule_object.schedule = data
-        ActionCable.server.broadcast('schedules', remove_non_ascii(build_sch(schedule_object.schedule)))
+        ActionCable.server.broadcast('schedules', encode(build_sch(schedule_object.schedule)))
         CRScheduleJob.perform_in(30, schedule_object)
       else
         CRScheduleJob.perform_in(30, schedule_object)
@@ -39,8 +40,9 @@ class CRScheduleJob
     end
   end
 
-  def remove_non_ascii(replacement) 
-    replacement.encode('UTF-8', :invalid => :replace, :undef => :replace)
+  def encode(str) 
+    str = str.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+    str = str.force_encoding(Encoding::UTF_8)
   end
 
   def valid_json?(json)

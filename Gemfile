@@ -5,13 +5,8 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 gem 'rack-cors'
 gem 'dotenv-rails'
-gem 'unicorn'
 gem 'sucker_punch', '~> 2.0'
 gem 'redis-rails'
-
-#auth
-gem 'knock'
-gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   gem 'byebug', platform: :mri

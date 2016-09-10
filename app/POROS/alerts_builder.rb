@@ -11,7 +11,9 @@ class AlertsJob
 
     key = ENV['MBTA_KEY']
     uri = URI('http://realtime.mbta.com/developer/api/v2/alerts')
-    params = { api_key: key}
+    params = { 
+      api_key: key,
+      format: 'json'}
     uri.query = URI.encode_www_form(params)
     http = Net::HTTP.new(uri.host)
     http.read_timeout = 5
@@ -33,14 +35,19 @@ class AlertsJob
               if arr.include?(stop['stop_id'])
                 alerts << {
                   id: stop["stop_id"],
-                  alert: alert
+                  alert: {
+                    id: alert["id"],
+                    header_text: alert["header_text"],
+                    severity: alert["severity"],
+                    alert: alert["effect_name"]
+                  }
                 }
               end
             end
           end
         end
       ab_object.alerts["alerts"] = alerts
-      ActionCable.server.broadcast('alerts', remove_non_ascii(ab_object.alerts.to_json))
+      ActionCable.server.broadcast('alerts', encode(ab_object.alerts.to_json))
       AlertsJob.perform_in(30, stops, ab_object)
       else
         AlertsJob.perform_in(30, stops, ab_object)
@@ -58,9 +65,10 @@ class AlertsJob
       return false
     end
   end
-
-  def remove_non_ascii(replacement) 
-    replacement.encode('UTF-8', :invalid => :replace, :undef => :replace)
+  
+  def encode(str) 
+    str = str.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+    str = str.force_encoding(Encoding::UTF_8)
   end
 end
 
