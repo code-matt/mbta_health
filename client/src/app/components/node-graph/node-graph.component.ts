@@ -182,6 +182,6 @@ export class NodeGraphComponent implements OnInit {
     this.network._callbacks.selectNode[0]({nodes:[node]})
   }
   closeDetails(){
-    this.state = 'active'
+    this.selected = undefined
   }
 }
