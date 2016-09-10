@@ -9,6 +9,10 @@ export class CountdownPipe implements PipeTransform {
   transform(time, tick) {
     var date = new Date(null);
     date.setSeconds(time - tick);
-    return date.toISOString().substr(11, 8);
+    if(time <= 0 ){
+      return "Arriving Soon"
+    }else{
+      return date.toISOString().substr(11, 8);
+    }
   }
 }

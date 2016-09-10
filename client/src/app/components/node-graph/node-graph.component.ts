@@ -75,6 +75,10 @@ export class NodeGraphComponent implements OnInit {
     });
   }
 
+  parseRouteAlerts(){
+
+  }
+
   startTick(){
     let timer = Observable.timer(0,1000);
     timer.subscribe(t => this.ticksSinceUpdate++);
@@ -89,6 +93,7 @@ export class NodeGraphComponent implements OnInit {
   public nodes: any = {}
   public schedules: any = {}
   public selected: any = undefined
+  public routeAlerts =  {}
 
   ngOnInit() {
     this.loadData()

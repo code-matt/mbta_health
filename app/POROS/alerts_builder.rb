@@ -39,16 +39,23 @@ class AlertsJob
                     id: alert["id"],
                     header_text: alert["header_text"],
                     severity: alert["severity"],
-                    alert: alert["effect_name"]
+                    effect_name: alert["effect_name"],
+                    effect_periods: {
+                      effect_start: alert["effect_periods"].first["effect_start"],
+                      effect_end: alert["effect_periods"].first["effect_end"],
+                    },
+                    affected_services: {
+                      services: alert["affected_services"]["services"]
+                    }
                   }
                 }
               end
             end
           end
         end
-      ab_object.alerts["alerts"] = alerts
-      ActionCable.server.broadcast('alerts', encode(ab_object.alerts.to_json))
-      AlertsJob.perform_in(30, stops, ab_object)
+        ab_object.alerts["alerts"] = alerts
+        ActionCable.server.broadcast('alerts', encode(ab_object.alerts.to_json))
+        AlertsJob.perform_in(30, stops, ab_object)
       else
         AlertsJob.perform_in(30, stops, ab_object)
       end

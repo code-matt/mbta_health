@@ -9,6 +9,27 @@
 	background-color: #EFEEEF;
 }
 
+.sch{
+	margin-bottom: 6px;
+	width: 100%;
+}
+
+.sch-row{
+	border: 1px solid black
+}
+
+.sch-row-header{
+	text-decoration: underline;
+}
+
+.fa-train{
+	/*color: #781498*/
+}
+
+.fa-subway{
+	/*color: #CB3333*/
+}
+
 .glyphicon-alert{
 	color: orangered;
 	font-size: 1.5em;

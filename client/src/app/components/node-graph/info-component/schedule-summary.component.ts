@@ -6,12 +6,62 @@ import { CountdownPipe } from './pipes/countdown.pipe'
   selector: 'schedule-summary',
   template: `
     <div class="row" *ngIf="stop">
-      <div class="col-md-10 col-md-offset-1 schedule-summary">
-        <span class="title">{{stop.route}} - {{stop.direction}}</span>
-        <br/>
-        <p>Destination: {{schedule.trip_headsign}}</p>
-        <p>Predicted Arrival: {{schedule.pre_away | CountdownPipe:ticksSinceUpdate}}</p>
-        <p>Departure Time: {{schedule.pre_dt | EpochPipe}}</p>
+      <div class="col-md-12 schedule-summary">
+        <div>
+          <table>
+            <tr>
+              <td>
+                <span class="fa-stack fa-2x">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i [style.color]="schedule.color" class="fa fa-{{schedule.mode}} fa-stack-1x fa-inverse"></i>
+                </span>
+              </td>
+              <td>
+                <span>
+                  {{stop.route}} - {{stop.direction}}
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <table class="sch">
+          <tr class="sch-row">
+            <td>
+              <span class="fa-stack">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i [style.color]="schedule.color" class="fa fa-map-marker fa-stack-1x"></i>
+              </span>
+            </td>
+            <td align="center">
+              <tr class="sch-row-header">Destination</tr>
+              <tr>{{schedule.trip_headsign}}</tr>
+            </td>
+          </tr>
+          <tr class="sch-row">
+            <td>
+              <span class="fa-stack">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i [style.color]="schedule.color" class="fa fa-clock-o fa-stack-1x"></i>
+              </span>
+            </td>
+            <td align="center">
+              <tr class="sch-row-header">Predicted Arrival</tr>
+              <tr>{{schedule.pre_away | CountdownPipe:ticksSinceUpdate}}</tr>
+            </td>
+          </tr>
+          <tr class="sch-row">
+            <td>
+              <span class="fa-stack">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i [style.color]="schedule.color" class="fa fa-clock-o fa-stack-1x"></i>
+              </span>
+            </td>
+            <td align="center">
+              <tr class="sch-row-header">Departure Time</tr>
+              <tr>{{schedule.pre_dt | EpochPipe:false}}</tr>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   `,

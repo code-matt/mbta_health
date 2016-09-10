@@ -1,5 +1,6 @@
 require 'json'
 require 'net/http'
+require 'route_colors'
 
 class CRScheduleJob
   include SuckerPunch::Job
@@ -30,7 +31,7 @@ class CRScheduleJob
         data = JSON.parse(res.body.force_encoding('UTF-8'))
 
         schedule_object.schedule = data
-        ActionCable.server.broadcast('schedules', encode(build_sch(schedule_object.schedule)))
+        ActionCable.server.broadcast('schedules', encode(schedule_object.build_sch(schedule_object.schedule)))
         CRScheduleJob.perform_in(30, schedule_object)
       else
         CRScheduleJob.perform_in(30, schedule_object)
@@ -53,6 +54,16 @@ class CRScheduleJob
       return false
     end
   end
+end
+
+class ScheduleBuilder
+  attr_accessor :schedule
+
+  def initialize()
+    @schedule = {}
+
+    CRScheduleJob.perform_async(self)
+  end
 
   def build_sch(schedules)
     schedule_data = {}
@@ -71,7 +82,9 @@ class CRScheduleJob
                   pre_dt: stop["pre_dt"],
                   pre_away: stop["pre_away"],
                   trip_headsign: trip["trip_headsign"],
-                  trip_name: trip["trip_name"]
+                  trip_name: trip["trip_name"],
+                  mode: mode["mode_name"] == "Subway" ? "subway":"train",
+                  color: ROUTE_COLORS.select{ |r| r[:name] == route["route_name"] }.first[:color]
                 }
             end
           end
@@ -79,15 +92,5 @@ class CRScheduleJob
       end
     end
     schedule_data.to_json
-  end
-end
-
-class ScheduleBuilder
-  attr_accessor :schedule
-
-  def initialize()
-    @schedule = {}
-
-    CRScheduleJob.perform_async(self)
   end
 end

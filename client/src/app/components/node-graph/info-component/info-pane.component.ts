@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angu
 import { AlertSummaryComponent } from './alert-summary.component'
 import { ScheduleSummaryComponent } from './schedule-summary.component'
 import { SchedulePipe } from '../pipes/schedule.pipe'
+import { EpochPipe } from './pipes/epochtime.pipe'
 
 @Component({
   selector: 'info-pane',
@@ -32,8 +33,10 @@ import { SchedulePipe } from '../pipes/schedule.pipe'
           <hr/>
           <div *ngFor="let alert of stationAlerts" class="alert">
             <p>Description: {{alert.alert.header_text}}</p>
-            <p>Effect Name: {{alert.alert.effect_name}}</p>
+            <p *ngIf="alert.alert.effect_name">Effect Name: {{alert.alert.effect_name}}</p>
             <p>Severity: {{alert.alert.severity}}</p>
+            <p>Effect Start: {{alert.alert.effect_periods.effect_start | EpochPipe:true}}</p>
+            <p *ngIf="alert.alert.effect_periods.effect_end">Effect End: {{alert.alert.effect_periods.effect_end | EpochPipe:true}}</p>
           </div>
         </div>
       </div>
@@ -73,7 +76,7 @@ export class InfoPaneComponent {
     {
       this.width = 90
     }else{
-      this.width = 25
+      this.width = 28
     }
 
   }
