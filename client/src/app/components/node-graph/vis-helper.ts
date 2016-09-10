@@ -1,5 +1,6 @@
 import * as vis from 'vis'
 import { NodeGraphComponent } from './node-graph.component'
+import { Observable } from 'rxjs'
 
 export class VisHelper {
   public network
@@ -61,6 +62,14 @@ export class VisHelper {
       edges: this.edge_options,
       groups: groups
     }
-    this.network.setOptions(options)
+    if(this.network){
+      this.network.setOptions(options)
+    }else{
+      let timer = Observable.timer(500);
+      timer.subscribe(t => {
+        this.network = this.parent.network
+        this.rebuildOptions()
+      });
+    }
   }
 }
