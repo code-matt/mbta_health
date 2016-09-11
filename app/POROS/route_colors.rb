@@ -13,19 +13,19 @@ ROUTE_COLORS = [
   },
   {
     name: "Green Line B",
-    color: "#00FF00",
+    color: "#29CF5E",
   },
   {
     name: "Green Line C",
-    color: "#00FF00"
+    color: "#29CF5E"
   },
   {
     name: "Green Line D",
-    color: "#00FF00"
+    color: "#29CF5E"
   },
   {
     name: "Green Line E",
-    color: "#00FF00",
+    color: "#29CF5E",
   },
   {
     name: "Mattapan Trolley",
