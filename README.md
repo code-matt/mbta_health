@@ -22,6 +22,7 @@ bundle install
 rails db:create
 rails db:migrate
 rails db:seed
+rails runner "app/POROS/seed_graph.rb"
 ```
 ```
 cd client
