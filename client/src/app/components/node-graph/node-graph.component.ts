@@ -133,7 +133,8 @@ export class NodeGraphComponent implements OnInit {
         label: edge["route"],
         id: id,
         color: { color: edge["color"] },
-        routeId: edge["routeId"]
+        routeId: edge["routeId"],
+        width: 30
       }
       this._VisHelper.edge_dataset.push(newEdge)
     }
@@ -187,5 +188,6 @@ export class NodeGraphComponent implements OnInit {
   }
   closeDetails(){
     this.selected = undefined
+    this.network.unselectAll()
   }
 }

@@ -68,7 +68,7 @@ class AlertsJob
     begin
       JSON.parse(json)
       return true
-    rescue JSON::ParserError => e
+    rescue JSON::ParserError
       return false
     end
   end

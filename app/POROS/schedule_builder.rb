@@ -31,7 +31,7 @@ class CRScheduleJob
         data = JSON.parse(res.body.force_encoding('UTF-8'))
 
         schedule_object.schedule = data
-        ActionCable.server.broadcast('schedules', encode(schedule_object.build_sch(schedule_object.schedule)))
+        ActionCable.server.broadcast('schedules', encode(schedule_object.build_sch))
         CRScheduleJob.perform_in(30, schedule_object)
       else
         CRScheduleJob.perform_in(30, schedule_object)
@@ -50,7 +50,7 @@ class CRScheduleJob
     begin
       JSON.parse(json)
       return true
-    rescue JSON::ParserError => e
+    rescue JSON::JSONError
       return false
     end
   end
@@ -65,9 +65,9 @@ class ScheduleBuilder
     CRScheduleJob.perform_async(self)
   end
 
-  def build_sch(schedules)
+  def build_sch()
     schedule_data = {}
-    schedules["mode"].each do |mode|
+    @schedule["mode"].each do |mode|
       mode["route"].each do |route|
         schedule_data[route["route_id"]] = {}
         route["direction"].each do |direction|

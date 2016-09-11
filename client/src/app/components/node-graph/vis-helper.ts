@@ -15,14 +15,24 @@ export class VisHelper {
       color: '#000000',
       size: 40,
     },
-    fixed: true
+    fixed: true,
+    color: {
+      highlight: {
+        background: '#00F7F3',
+        border: '#FFFFFF'
+      }
+    }
   }
 
   edge_options: vis.IEdgeOptions = {
     font: {
       size: 10,
-    },
-    width: 10
+    }
+  }
+
+  interaction_options = {
+    selectConnectedEdges: false,
+    dragNodes: false,
   }
 
   buildOptions() {
@@ -53,14 +63,21 @@ export class VisHelper {
         var color = filter.length > 0 ? 'red' : 'rgb(0,255,140)'
 
         groups[this.parent.nodes.nodes[node]["stop_name"]] = {
-          color: color
+          color: {
+            background: color,
+            highlight: {
+              background: '#00F7F3',
+              border: '#FFFFFF'
+            }
+          }
         }
       }
     }
     var options = {
       nodes: this.node_options,
       edges: this.edge_options,
-      groups: groups
+      groups: groups,
+      interaction: this.interaction_options
     }
     if(this.network){
       this.network.setOptions(options)
