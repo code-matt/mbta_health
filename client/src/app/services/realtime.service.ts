@@ -20,7 +20,8 @@ export class AlertsService {
     this.websocket = new WebSocket(this.env.wsUrl);
     this.websocket.onopen = (evt) => {
       this.websocket.send(JSON.stringify({ command: "subscribe", identifier: JSON.stringify({ channel: 'AlertsChannel' }), type: "confirm_subscription" }));
-      this.websocket.send(JSON.stringify({ command: "subscribe", identifier: JSON.stringify({ channel: 'SchedulesChannel' }), type: "confirm_subscription" }));
+      var timer = Observable.timer(200)
+      timer.subscribe(e => this.websocket.send(JSON.stringify({ command: "subscribe", identifier: JSON.stringify({ channel: 'SchedulesChannel' }), type: "confirm_subscription" })))
     };
     return Observable.create(observer => {
       this.websocket.onmessage = (evt) => {
