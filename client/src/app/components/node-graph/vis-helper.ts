@@ -64,11 +64,12 @@ export class VisHelper {
     }
     if(this.network){
       this.network.setOptions(options)
+      this.network.redraw()
     }else{
       let timer = Observable.timer(500);
       timer.subscribe(t => {
         this.network = this.parent.network
-        this.rebuildOptions()
+        this.network.setOptions(options)
       });
     }
   }

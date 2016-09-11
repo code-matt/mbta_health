@@ -63,7 +63,6 @@ export class NodeGraphComponent implements OnInit {
       if (channel == "AlertsChannel") {
         component.alerts = JSON.parse(result["message"])
         component._VisHelper.rebuildOptions()
-        component._VisHelper.network.redraw()
         component.updateCount++
       }
       if (channel == "SchedulesChannel") {
