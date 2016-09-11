@@ -2,7 +2,7 @@ class SchedulesChannel < ApplicationCable::Channel
   def subscribed
     stream_from 'schedules'
     schedule_object = ApplicationController::SCHEDULE
-    ActionCable.server.broadcast('schedules', encode(schedule_object.build_sch(schedule_object.schedule)))
+    ActionCable.server.broadcast('schedules', encode(schedule_object.build_sch))
     
   end
 
