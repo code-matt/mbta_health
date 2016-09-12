@@ -176,7 +176,6 @@ export class NodeGraphComponent implements OnInit {
     })
   }
   zoomToStation(node) {
-    debugger
     this.hackSelect(node.node.node_id)
     var options = {
       scale: 0.35,
