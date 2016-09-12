@@ -54,6 +54,15 @@ export class NodeGraphComponent implements OnInit {
     private _VisHelper: VisHelper) {
 
     this._VisHelper.parent = this
+    var keepAlive = Observable.timer(0,2000)
+    keepAlive.subscribe( e=> {
+      if(this._wsService.getState() == 3 || this._wsService.getState() == -1){
+        this.connectWs()
+      }
+    })
+  }
+
+  connectWs(){
     var component = this
     this._wsService.GetInstanceStatus().subscribe((result) => {
       if(result["type"] != "ping" && result["message"] != undefined)
@@ -72,10 +81,6 @@ export class NodeGraphComponent implements OnInit {
         component.resetTick()
       }
     });
-  }
-
-  parseRouteAlerts(){
-
   }
 
   startTick(){
@@ -171,6 +176,7 @@ export class NodeGraphComponent implements OnInit {
     })
   }
   zoomToStation(node) {
+    debugger
     this.hackSelect(node.node.node_id)
     var options = {
       scale: 0.35,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { ENV } from '../shared/env'
+import { ENV } from '../shared/env';
 
 export interface Message {
   message: string;
@@ -30,5 +30,12 @@ export class AlertsService {
     })
     .map(res => JSON.parse(res.data))
     .share();
+  }
+  getState(){
+    if(this.websocket){
+      return this.websocket.readyState
+    }else{
+      return -1
+    }
   }
 }
