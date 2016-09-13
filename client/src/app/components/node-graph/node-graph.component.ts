@@ -24,7 +24,7 @@ import { Observable } from 'rxjs'
 @Component({
   selector: 'node-graph',
   template: `
-  <node-header (loadStation)="zoomToStation($event)" [nodes]="nodes" [updateCount]="updateCount"></node-header>
+  <node-header (loadStation)="zoomToStation($event)" [nodes]="nodes" [updateCount]="updateCount" [status]="mbtaApiStatus"></node-header>
   <div class="row">
     <div class="col-lg-12">
       <div [ngClass]="{'graphSlideLeft':selected, 'graphSlideRight': !selected}" #network class="mbta-network"></div>
@@ -47,6 +47,7 @@ export class NodeGraphComponent implements OnInit {
   @ViewChild('info') info;
   public state: string = 'active'
   public updateCount: number = 0
+  public mbtaApiStatus: number = undefined
 
   constructor(
     private _graphService: NetworkGraphService,
@@ -79,6 +80,9 @@ export class NodeGraphComponent implements OnInit {
         component.schedules = schedules
         component.updateCount++
         component.resetTick()
+      }
+      if (channel == "StatusChannel") {
+        this.mbtaApiStatus = Number(result["message"])
       }
     });
   }
@@ -176,6 +180,7 @@ export class NodeGraphComponent implements OnInit {
     })
   }
   zoomToStation(node) {
+    debugger
     this.hackSelect(node.node.node_id)
     var options = {
       scale: 0.35,

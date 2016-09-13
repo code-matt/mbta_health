@@ -11,8 +11,8 @@
           </div>
           <search-results (loadStation)="load($event)" *ngIf="focus" [nodes]='nodes.nodes' [query]='query'></search-results>
         </div>
-        <div class="col-md-4 col-xs-12">
-          <update-timer [updateCount]="updateCount"></update-timer>
+        <div class="col-md-3 col-xs-12">
+          <update-timer [status]="status" [updateCount]="updateCount"></update-timer>
         </div>
         <div class="col-md-2 text-right">
           <h3><a href="https://github.com/code-matt/mbta_health" target="_blank">GitHub</a></h3>

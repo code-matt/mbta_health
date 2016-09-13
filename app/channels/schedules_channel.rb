@@ -3,7 +3,7 @@ class SchedulesChannel < ApplicationCable::Channel
     stream_from 'schedules'
     schedule_object = ApplicationController::SCHEDULE
     ActionCable.server.broadcast('schedules', encode(schedule_object.build_sch))
-    
+    ActionCable.server.broadcast('status', "1")
   end
 
   def encode(str) 

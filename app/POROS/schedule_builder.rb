@@ -7,6 +7,7 @@ class CRScheduleJob
 
   def perform(schedule_object)
     print "Updating commuter rail schedules in seperate thread..."
+    mbta_status = ApplicationController::STATUS
 
     key = ENV['MBTA_KEY']
     uri = URI('http://realtime.mbta.com/developer/api/v2/predictionsbyroutes')
@@ -23,6 +24,7 @@ class CRScheduleJob
       res = http.get(uri.to_s)
     rescue SocketError, Net::OpenTimeout, Net::ReadTimeout
       puts "Error with MBTA!!!"
+      ActionCable.server.broadcast('status', "0")
       CRScheduleJob.perform_in(30, schedule_object)
       return
     end
@@ -32,11 +34,17 @@ class CRScheduleJob
 
         schedule_object.schedule = data
         ActionCable.server.broadcast('schedules', encode(schedule_object.build_sch))
+        mbta_status.status = 1
+        mbta_status.broadcast
         CRScheduleJob.perform_in(30, schedule_object)
       else
+        mbta_status.status = 0
+        mbta_status.broadcast
         CRScheduleJob.perform_in(30, schedule_object)
       end
     else
+      mbta_status.status = 0
+      mbta_status.broadcast
       CRScheduleJob.perform_in(30, schedule_object)
     end
   end

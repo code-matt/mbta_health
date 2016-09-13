@@ -16,6 +16,7 @@ export class HeaderComponent {
   @Output() loadStation = new EventEmitter();
   @Input() nodes = {};
   @Input() updateCount: number = 0
+  @Input() status
   search = new Control();
   query: string;
   public env = ENV

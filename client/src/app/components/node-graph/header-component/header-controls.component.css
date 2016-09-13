@@ -37,3 +37,98 @@ input{
   cursor: pointer;
   background-color: #5F999F
 }
+
+.data-status{
+  text-align: center;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.status{
+  text-align: center;
+}
+
+.status-info{
+  text-align: center;
+  font-size: 0.7em;
+  color: #389DB0;
+}
+
+.explination{
+  position: absolute;
+  z-index: 4;
+  background-color: #FFFFFF;
+  width: 89%;
+}
+
+.pullDown{
+	animation-name: pullDown;
+	-webkit-animation-name: pullDown;	
+
+	animation-duration: 0.2s;	
+	-webkit-animation-duration: 0.2s;
+  -webkit-animation-fill-mode: forwards;
+
+	animation-timing-function: ease-out;	
+	-webkit-animation-timing-function: ease-out;	
+
+	transform-origin: 50% 0%;
+	-ms-transform-origin: 50% 0%;
+	-webkit-transform-origin: 50% 0%; 		
+}
+
+@keyframes pullDown {
+	0% {
+		transform: scaleY(0.01);
+	}
+	100% {
+		transform: scaleY(1);
+	}							
+}
+
+@-webkit-keyframes pullDown {
+	0% {
+		-webkit-transform: scaleY(0.01);
+	}
+	100% {
+		-webkit-transform: scaleY(1);
+	}		
+}
+
+
+.pullUp{
+	animation-name: pullUp;
+	-webkit-animation-name: pullUp;	
+
+	animation-duration: 0.2s;	
+	-webkit-animation-duration: 0.2s;
+  -webkit-animation-fill-mode: forwards;
+
+	animation-timing-function: ease-out;	
+	-webkit-animation-timing-function: ease-out;	
+
+	transform-origin: 50% 0%;
+	-ms-transform-origin: 50% 0%;
+	-webkit-transform-origin: 50% 0%; 		
+}
+
+@keyframes pullUp {
+	0% {
+		transform: scaleY(1);
+	}
+	100% {
+		transform: scaleY(0.01);
+	}							
+}
+
+@-webkit-keyframes pullUp {
+	0% {
+		-webkit-transform: scaleY(1);
+	}
+	100% {
+		-webkit-transform: scaleY(0.01);
+	}		
+}
+
+

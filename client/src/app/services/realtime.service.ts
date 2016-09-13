@@ -22,6 +22,8 @@ export class AlertsService {
       this.websocket.send(JSON.stringify({ command: "subscribe", identifier: JSON.stringify({ channel: 'AlertsChannel' }), type: "confirm_subscription" }));
       var timer = Observable.timer(200)
       timer.subscribe(e => this.websocket.send(JSON.stringify({ command: "subscribe", identifier: JSON.stringify({ channel: 'SchedulesChannel' }), type: "confirm_subscription" })))
+      var timer2 = Observable.timer(300)
+      timer2.subscribe(e => this.websocket.send(JSON.stringify({ command: "subscribe", identifier: JSON.stringify({ channel: 'StatusChannel' }), type: "confirm_subscription" })))
     };
     return Observable.create(observer => {
       this.websocket.onmessage = (evt) => {
