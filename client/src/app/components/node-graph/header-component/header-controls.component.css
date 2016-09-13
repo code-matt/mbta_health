@@ -69,6 +69,7 @@ input{
 	animation-duration: 0.2s;	
 	-webkit-animation-duration: 0.2s;
   -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
 	animation-timing-function: ease-out;	
 	-webkit-animation-timing-function: ease-out;	
@@ -104,6 +105,7 @@ input{
 	animation-duration: 0.2s;	
 	-webkit-animation-duration: 0.2s;
   -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
 	animation-timing-function: ease-out;	
 	-webkit-animation-timing-function: ease-out;	

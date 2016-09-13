@@ -79,6 +79,7 @@ hr{
 	animation-duration: 0.5s;	
 	-webkit-animation-duration: 0.5s;
 	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
 
 	animation-timing-function: ease-in-out;	
 	-webkit-animation-timing-function: ease-in-out;		
@@ -113,6 +114,7 @@ hr{
 	animation-duration: 0.5s;	
 	-webkit-animation-duration: 0.5s;
 	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
 
 	animation-timing-function: ease-in-out;	
 	-webkit-animation-timing-function: ease-in-out;		
