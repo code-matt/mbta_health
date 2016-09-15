@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-2 col-xs-12">
           <div class="input-group">
-            <input [ngFormControl]="search" type="text" class="form-control" placeholder="Enter station name">
+            <input [formControl]="search" type="text" class="form-control" placeholder="Enter station name">
           </div>
           <search-results (loadStation)="load($event)" *ngIf="focus" [nodes]='nodes.nodes' [query]='query'></search-results>
         </div>

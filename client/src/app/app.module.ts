@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http'
-import { FORM_DIRECTIVES } from '@angular/common'
 import { AppComponent } from './app.component'
 import { routing } from './app.routing';
 
 import { PageNotFoundComponent } from './components/404-page/404.component'
 import { RailsRedirectComponent } from './rails-redirect/rails.component'
+import { NodeGraphComponent} from './components/node-graph/node-graph.component'
+import { VisHelper } from './components/node-graph/vis-helper'
 
 import { NetworkGraphService } from './services/mbta-network.service'
 import { AlertsService } from './services/realtime.service'
@@ -27,15 +28,12 @@ import { SearchPipe } from './components/node-graph/pipes/search-results.pipe'
 import { SchedulePipe } from './components/node-graph/pipes/schedule.pipe'
 import { SelectionPipe } from './components/node-graph/pipes/selection.pipe'
 
-import { NodeGraphComponent } from './components/node-graph/node-graph.component'
-import { VisHelper } from './components/node-graph/vis-helper'
-
 @NgModule({
   imports: [
     BrowserModule,
     routing,
     HttpModule,
-    FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,
@@ -53,7 +51,7 @@ import { VisHelper } from './components/node-graph/vis-helper'
     AlertsPipe,
     SchedulePipe,
     SelectionPipe,
-    FORM_DIRECTIVES
+    NodeGraphComponent
   ],
   bootstrap: [
     AppComponent

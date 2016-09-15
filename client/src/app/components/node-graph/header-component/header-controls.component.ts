@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core'
-import { Control } from '@angular/common'
+import { FormControl } from '@angular/forms';
 import { SearchResultsComponent } from './search-results.component'
 import 'rxjs/add/operator/debounceTime'
 import { ENV } from '../../../shared/env'
@@ -16,7 +16,7 @@ export class HeaderComponent {
   @Output() loadStation = new EventEmitter();
   @Input() nodes = {};
   @Input() updateCount: number = 0
-  search = new Control();
+  search = new FormControl();
   query: string;
   public env = ENV
 
