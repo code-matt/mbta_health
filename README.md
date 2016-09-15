@@ -27,12 +27,21 @@ rails runner "app/POROS/seed_graph.rb"
 ```
 cd client
 npm install
+ng env:init
 ```
-Create a file in ```client``` named ```env.json```
+ng env:init will create env.json and app-env.interface.ts
 ```
+env.json
 {
   "baseUrl": "http://localhost:3000",
   "wsUrl": "ws://localhost:3000/cable"
+}
+```
+```
+app-env.interface.ts
+export interface AppEnv {
+    baseUrl: string;
+    wsUrl: string;
 }
 ```
 ```
