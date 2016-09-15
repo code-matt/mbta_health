@@ -6,6 +6,8 @@ class AlertsJob
 
   def perform(stops,ab_object)
     print "Updating alerts in seperate thread..."
+    mbta_status = ApplicationController::STATUS
+
     arr = stops.map{ |stop| stop.mbta_stop_id }.uniq
     alerts = []
 
@@ -22,6 +24,7 @@ class AlertsJob
       res = http.get(uri.to_s)
     rescue SocketError, Net::OpenTimeout, Net::ReadTimeout
       puts "Error with MBTA!!!"
+      ActionCable.server.broadcast('status', "0")
       AlertsJob.perform_in(30, stops, ab_object)
       return
     end
@@ -55,11 +58,17 @@ class AlertsJob
         end
         ab_object.alerts["alerts"] = alerts
         ActionCable.server.broadcast('alerts', encode(ab_object.alerts.to_json))
+        mbta_status.status = 1
+        mbta_status.broadcast
         AlertsJob.perform_in(30, stops, ab_object)
       else
+        mbta_status.status = 0
+        mbta_status.broadcast
         AlertsJob.perform_in(30, stops, ab_object)
       end
     else
+      mbta_status.status = 0
+      mbta_status.broadcast
       AlertsJob.perform_in(30, stops, ab_object)
     end
   end
