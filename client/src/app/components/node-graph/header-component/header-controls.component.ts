@@ -17,7 +17,7 @@ export class HeaderComponent {
   @Input() nodes = {};
   @Input() updateCount: number = 0
   @Input() status
-  search = new Control();
+  search = new FormControl();
   query: string;
   public env = ENV
 
